@@ -1,9 +1,21 @@
 import "./App.css";
-
+import "bootstrap/dist/css/bootstrap.min.css";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import Register from "./components/Register";
+import Signin from "./components/Signin";
+import NavBar from "./components/NavBar";
 function App() {
   return (
     <>
-      <h1>Hello world</h1>
+      <Router>
+        
+        <NavBar/>
+
+        <Routes>
+          <Route path="/register" element={<Register />} />
+          <Route path="/signin" element={<Signin />} />
+        </Routes>
+      </Router>
     </>
   );
 }
