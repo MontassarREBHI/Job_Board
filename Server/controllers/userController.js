@@ -1,16 +1,17 @@
-const mongoose = require('mongoose');
-const User = require('../models/users');
+const mongoose = require("mongoose");
+const User = require("../models/users");
 
 const addUser = async (req, res) => {
-  const { name, email, phone, address, CV } = req.body;
+  const { name, email, phone, address, CV, role } = req.body;
 
   try {
-    const user = new User({ name, email, phone, address, CV });
+    const user = new User({ name, email, phone, address, CV, role });
     await user.save();
-    res.status(200).json({ user, message: 'User created successfully' });
+
+    res.status(200).json({ user, message: "User created successfully" });
   } catch (error) {
-    console.error('Error saving user:', error);
-    res.status(500).send('Something went wrong');
+    console.error("Error saving user:", error);
+    res.status(500).send("Something went wrong");
   }
 };
 

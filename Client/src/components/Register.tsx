@@ -1,30 +1,42 @@
 import { Container, Form, Button, Col } from "react-bootstrap";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   createUserWithEmailAndPassword,
   signInWithPopup,
   GoogleAuthProvider,
 } from "firebase/auth";
+import axios from "axios";
 import { auth, provider } from "../config/firebaseConfig";
 
-const Register = () => {
+const Register: React.FC = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-
-  const registUser = async (event) => {
+  const navigate = useNavigate();
+  // const emailRegex = "/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,4}$/";
+  const registUser = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     confirmPassword === password
       ? createUserWithEmailAndPassword(auth, email, password)
           .then((userCredential) => {
             // Signed in
             const user = userCredential.user;
-            console.log(user);
+            axios
+              .post("http://localhost:5000/user", {
+                email: user.email,
+                role: "applicant",
+              })
+              .then((res: any) => {
+                console.log(res.data.message);
+                navigate("/signin");
+              })
+              .catch((err) => console.log(err.message));
           })
           .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
-            console.log(errorMessage);
+            alert(errorMessage);
             // ..
           })
       : alert("retype password correctly");
@@ -63,6 +75,7 @@ const Register = () => {
             type="email"
             placeholder="Enter email"
             onChange={(e) => setEmail(e.target.value)}
+            required
           />
           <Form.Text className="text-muted">
             We'll never share your email with anyone else.
