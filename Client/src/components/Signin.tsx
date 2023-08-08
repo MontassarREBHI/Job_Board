@@ -5,12 +5,13 @@ import {
   GoogleAuthProvider,
   sendPasswordResetEmail,
 } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 import { auth, provider } from "../config/firebaseConfig";
 import { Container, Form, Button, Col, Nav, Row } from "react-bootstrap";
 const Signin = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-
+  const navigate = useNavigate();
   const signIn = async (e) => {
     e.preventDefault();
     signInWithEmailAndPassword(auth, email, password)
@@ -18,6 +19,7 @@ const Signin = () => {
         // Signed in
         const user = userCredential.user;
         alert("signed in successfully ");
+        navigate("/");
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -67,42 +69,48 @@ const Signin = () => {
 
   return (
     <Container>
-      <Form onSubmit={(e) => signIn(e)}>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>Email address</Form.Label>
-          <Form.Control
-            type="email"
-            placeholder="Enter email"
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <Form.Text className="text-muted">
-            We'll never share your email with anyone else.
-          </Form.Text>
-        </Form.Group>
+      <Row style={{ marginTop: "10%" }}>
+        <Col xs={4}></Col>
+        <Col xs={4}>
+          <Form onSubmit={(e) => signIn(e)}>
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Label>Email address</Form.Label>
+              <Form.Control
+                type="email"
+                placeholder="Enter email"
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <Form.Text className="text-muted">
+                We'll never share your email with anyone else.
+              </Form.Text>
+            </Form.Group>
 
-        <Form.Group className="mb-3" controlId="formBasicPassword">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type="password"
-            placeholder="Password"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicPassword">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                type="password"
+                placeholder="Password"
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </Form.Group>
 
-        <Button variant="primary" type="submit">
-          Sign In
-        </Button>
-        <Row>
-          <Col xs={6}> Forgot password ?</Col>
-          <Col xs={6}>
-            <Nav.Link onClick={resetPassword}>Click here</Nav.Link>
-          </Col>
-        </Row>
+            <Button variant="primary" type="submit">
+              Sign In
+            </Button>
+            <Row style={{ marginTop: "5%" }}>
+              <Col xs={6}> Forgot password ?</Col>
+              <Col xs={3}>
+                <Nav.Link onClick={resetPassword}>Click here</Nav.Link>
+              </Col>
+            </Row>
 
-        {/* <p onClick={()=>()}>sign in</p> */}
-      </Form>
+            {/* <p onClick={()=>()}>sign in</p> */}
+          </Form>
+        </Col>
+        <Col xs={4}></Col>
+      </Row>
       <Button
-        style={{ border: "solid black", marginTop: 5 }}
+        style={{ border: "solid black", marginTop: "3%" }}
         onClick={signinWithGoogle}
       >
         <Col>
