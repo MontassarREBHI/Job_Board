@@ -12,19 +12,20 @@ const Signin = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const navigate = useNavigate();
-  const signIn = async (e) => {
+  const signIn = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in
-        const user = userCredential.user;
-        alert("signed in successfully ");
+         const user = userCredential.user;
+        alert(`signed in successfully ${user}`);
         navigate("/");
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
         alert("error occurred");
+        console.log(errorCode,errorMessage)
       });
   };
 

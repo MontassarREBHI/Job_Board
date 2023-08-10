@@ -1,7 +1,7 @@
 import React from 'react'
-import { Container, Navbar,Nav, Button } from "react-bootstrap";
+import { Container, Navbar,Nav } from "react-bootstrap";
 import {Link} from 'react-router-dom'
-function NavBar() {
+function NavBar():JSX.Element {
   return (
     <Navbar bg="primary" data-bs-theme="dark">
         <Container>
