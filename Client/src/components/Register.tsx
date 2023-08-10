@@ -6,6 +6,8 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
 } from "firebase/auth";
+import { useSelector } from "react-redux";
+
 import axios from "axios";
 import { auth, provider } from "../config/firebaseConfig";
 
@@ -14,6 +16,9 @@ const Register: React.FC = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const navigate = useNavigate();
+  const selectedJob = useSelector((state) => {
+    console.log(state.job);
+  });
   // const emailRegex = "/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,4}$/";
   const registUser = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -36,7 +41,7 @@ const Register: React.FC = () => {
           .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
-            console.log(errorCode)
+            console.log(errorCode);
             alert(errorMessage);
             // ..
           })
@@ -48,7 +53,7 @@ const Register: React.FC = () => {
         // This gives you a Google Access Token. You can use it to access the Google API.
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const token = credential?.accessToken;
-        console.log(token)
+        console.log(token);
         // The signed-in user info.
         const user = result.user;
 
