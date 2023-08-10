@@ -27,7 +27,7 @@ const Register: React.FC = () => {
                 email: user.email,
                 role: "applicant",
               })
-              .then((res: any) => {
+              .then((res) => {
                 console.log(res.data.message);
                 navigate("/signin");
               })
@@ -36,6 +36,7 @@ const Register: React.FC = () => {
           .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
+            console.log(errorCode)
             alert(errorMessage);
             // ..
           })
@@ -46,7 +47,8 @@ const Register: React.FC = () => {
       .then((result) => {
         // This gives you a Google Access Token. You can use it to access the Google API.
         const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
+        const token = credential?.accessToken;
+        console.log(token)
         // The signed-in user info.
         const user = result.user;
 
@@ -60,9 +62,9 @@ const Register: React.FC = () => {
         const errorMessage = error.message;
         console.log(errorMessage, errorCode);
         // The email of the user's account used.
-        const email = error.customData.email;
+        // const email = error.customData.email;
         // The AuthCredential type that was used.
-        const credential = GoogleAuthProvider.credentialFromError(error);
+        // const credential = GoogleAuthProvider.credentialFromError(error);
         // ...
       });
   };
