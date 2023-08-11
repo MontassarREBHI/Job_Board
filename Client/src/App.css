@@ -1,6 +1,43 @@
-#root {
-  max-width: 2000px;
-  margin: 0 auto;
+/* JobApply.css */
 
-  text-align: center;
+.job-apply-container {
+  background-color: #f7f7f7;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
+
+.position-title {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.job-code {
+  font-size: 18px;
+  color: #888;
+}
+
+.job-image {
+  max-width: 100%;
+  height: auto;
+  margin-top: 20px;
+  border-radius: 5px;
+}
+
+.apply-button {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.section-title {
+  font-size: 20px;
+  margin-top: 20px;
+}
+
+.company-description,
+.job-description,
+.job-requirement {
+  margin-top: 10px;
+  line-height: 1.6;
+}
+
