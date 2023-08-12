@@ -7,7 +7,9 @@ export interface JobState {
     title: string;
     description: string;
     imageUrl: string;
-  };
+    companyDesc:string;
+    jobRequirement:string;
+  }
 }
 
 const initialState: JobState = {
@@ -16,6 +18,8 @@ const initialState: JobState = {
     title: "",
     description: "",
     imageUrl: "",
+    companyDesc:'',
+    jobRequirement:'',
   },
 };
 
@@ -23,8 +27,8 @@ export const jobSlice = createSlice({
   name: "job",
   initialState,
   reducers: {
-    selectOffer: (state, action: PayloadAction<JobState>) => {
-      return action.payload;
+    selectOffer: (state, action: PayloadAction<JobState['value']>) => {
+      state.value = action.payload;
     },
   },
 });
