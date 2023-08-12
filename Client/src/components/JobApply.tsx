@@ -2,11 +2,12 @@ import React from 'react';
 import { Button, Container, Row, Col } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { RootState } from "../app/store.js";
+import { useNavigate } from 'react-router-dom';
 import '../App.css'; // Import your custom styles
 
 const JobApply = () => {
   const job = useSelector((state: RootState) => state.job.value);
-
+const navigate = useNavigate()
   return (
     <Container className="job-apply-container">
       <Row>
@@ -16,7 +17,7 @@ const JobApply = () => {
           <img src={job.imageUrl} alt="Job" className="job-image img-fluid" />
         </Col>
         <Col md={4}>
-          <Button variant="primary" className="apply-button">Apply for this position</Button>
+          <Button variant="primary" className="apply-button" onClick={()=>{ navigate('/Application')}}>Apply for this position</Button>
         </Col>
       </Row>
       <Row>
