@@ -26,6 +26,7 @@ const Home = () => {
   const [search, setSearch] = useState<boolean>(false);
   const [keyWord, setKeyWord] = useState<string>("");
   const [filteredData, setFilteredData] = useState<jobType[]>(data);
+  const [display,setDisplay]=useState<number>(5)
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
@@ -34,7 +35,7 @@ const Home = () => {
       .get("http://localhost:5000/job")
       .then((res) => {
         setData(res.data.list);
-        setFilteredData(res.data.list);
+        setFilteredData(res.data.list.reverse());
       })
       .catch((err) => {
         console.log(err.message);
@@ -85,7 +86,7 @@ const Home = () => {
         </>
       )}
       <Row>
-        {filteredData.map((job: jobType) => (
+        {filteredData.filter((e,i)=>i<display).map((job: jobType) => (
           <Col key={job._id} xs={3}>
             <Card style={{ marginBottom: "3%" }}>
               <Card.Img variant="top" src="holder.js/100px180" />
@@ -113,6 +114,7 @@ const Home = () => {
           </Col>
         ))}
       </Row>
+      <Button onClick={()=>setDisplay(prev=>prev+5)}>see more</Button>
     </div>
   );
 };

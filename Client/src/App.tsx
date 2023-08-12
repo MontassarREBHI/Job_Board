@@ -7,6 +7,7 @@ import NavBar from "./components/NavBar";
 import Home from "./components/Home";
 import JobApply from "./components/JobApply";
 import AddJob from "./components/AddJob";
+import Application from "./components/Application";
 function App() {
   return (
     <>
@@ -19,6 +20,7 @@ function App() {
           <Route path="/signin" element={<Signin />} />
           <Route path="/jobApply" element={<JobApply/>} />
           <Route path="/Addjob" element={<AddJob/>} />
+          <Route path="/Application" element={<Application/>} />
         </Routes>
       </Router>
     </>
