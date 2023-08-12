@@ -1,30 +1,81 @@
-import React, { useState, useEffect } from "react";
-import { Row, Col, Card, Button } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Card,
+  Button,
+  FloatingLabel,
+  Form,
+} from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import data from "../dummyData.js";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { selectOffer } from "../features/job/jobSlice.js";
-import { RootState } from "../app/store.js";
+import { useState,useEffect } from "react";
 
 interface jobType {
   id: number;
   title: string;
   description: string;
   imageUrl: string;
+  companyDesc: string;
+  jobRequirement: string;
 }
 
 const Home = () => {
-  const [offer, setOffer] = useState(false);
-  let selectedJob = useSelector((state: RootState) => {
-    return state.job.value;
-  });
-  useEffect(() => {
-    console.log(selectedJob);
-  }, [offer]);
+  const [search, setSearch] = useState<boolean>(false);
+  const [keyWord, setKeyWord] = useState<string>("");
+  const [filteredData, setFilteredData] = useState<jobType[]>(data);
+  const navigate = useNavigate();
+
   const dispatch = useDispatch();
+  useEffect(() => {
+    if (!keyWord) {
+      setFilteredData(data);
+    } else {
+      const filteredJobs = data.filter((job: jobType) =>
+        job.title.toLowerCase().includes(keyWord.toLowerCase())
+      );
+      setFilteredData(filteredJobs);
+    }
+  }, [keyWord]);
+ 
   return (
-    <div style={{ display: "inline-block" }}>
+    <div >
+      <Container
+        style={{
+          display: "flex",
+          marginInlineStart: "40%",
+          marginTop: "5%",
+          marginBottom: "2%",
+        }}
+      >
+        <Button onClick={() => setSearch((prev) => !prev)}>
+          {" "}
+          search a job{" "}
+        </Button>
+      </Container>
+      {search && (
+        <>
+          <FloatingLabel
+            style={{ marginInline: "25%" }}
+            controlId="floatingInput"
+            label="search by title"
+            className="mb-3"
+          >
+            <Form.Control
+              type="text"
+              placeholder="enter a key word"
+              onChange={(e) => {
+                setKeyWord(e.target.value);
+                
+              }}
+            />
+          </FloatingLabel>
+        </>
+      )}
       <Row>
-        {data.map((job: jobType) => (
+        {filteredData.map((job: jobType) => (
           <Col key={job.id} xs={3}>
             <Card style={{ marginBottom: "3%" }}>
               <Card.Img variant="top" src="holder.js/100px180" />
@@ -41,9 +92,8 @@ const Home = () => {
                   variant="primary"
                   onClick={() => {
                     dispatch(selectOffer(job));
-                    setOffer((prev) => {
-                      return !prev;
-                    });
+
+                    navigate("/jobApply");
                   }}
                 >
                   Apply
