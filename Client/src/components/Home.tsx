@@ -8,27 +8,38 @@ import {
   Form,
 } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import data from "../dummyData.js";
+import axios from "axios";
 import { useDispatch } from "react-redux";
 import { selectOffer } from "../features/job/jobSlice.js";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 
 interface jobType {
-  id: number;
+  _id: string;
   title: string;
   description: string;
-  imageUrl: string;
   companyDesc: string;
-  jobRequirement: string;
+  requirement: string;
 }
 
 const Home = () => {
+  const [data, setData] = useState([]);
   const [search, setSearch] = useState<boolean>(false);
   const [keyWord, setKeyWord] = useState<string>("");
   const [filteredData, setFilteredData] = useState<jobType[]>(data);
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/job")
+      .then((res) => {
+        setData(res.data.list);
+        setFilteredData(res.data.list);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }, []);
   useEffect(() => {
     if (!keyWord) {
       setFilteredData(data);
@@ -39,9 +50,9 @@ const Home = () => {
       setFilteredData(filteredJobs);
     }
   }, [keyWord]);
- 
+
   return (
-    <div >
+    <div>
       <Container
         style={{
           display: "flex",
@@ -68,7 +79,6 @@ const Home = () => {
               placeholder="enter a key word"
               onChange={(e) => {
                 setKeyWord(e.target.value);
-                
               }}
             />
           </FloatingLabel>
@@ -76,7 +86,7 @@ const Home = () => {
       )}
       <Row>
         {filteredData.map((job: jobType) => (
-          <Col key={job.id} xs={3}>
+          <Col key={job._id} xs={3}>
             <Card style={{ marginBottom: "3%" }}>
               <Card.Img variant="top" src="holder.js/100px180" />
               <Card.Body>
