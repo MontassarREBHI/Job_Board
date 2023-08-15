@@ -1,5 +1,26 @@
 const mongoose = require("mongoose");
 const Job = require("../models/job");
+const Application = require("../models/application");
+const multer = require("multer");
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "/tmp/my-uploads");
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+    cb(null, file.fieldname + "-" + uniqueSuffix);
+  },
+});
+
+const upload = multer({ storage: storage });
+
+const fileUpload = upload.single("CV");
+
+const jobApply = async (req, res) => {
+  const { email, fullName, country, phoneNumber } = req.body;
+  const CVFile = req.file;
+};
 
 const addJob = async (req, res) => {
   const { title, companyDesc, requirement, description } = req.body;
@@ -23,4 +44,4 @@ const jobList = async (req, res) => {
   }
 };
 
-module.exports = { addJob, jobList };
+module.exports = { addJob, jobList, fileUpload };
