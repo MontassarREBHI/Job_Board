@@ -11,12 +11,13 @@ const Application = () => {
     phoneNumber: 0,
     CV: null,
   });
-  const [filePath,setFilePath]=useState<string>('')
+  const [filePath, setFilePath] = useState<string>("");
   const job = useSelector((state: RootState) => state.job.value);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const formData = new FormData();
+    formData.append("jobID", job._id);
     formData.append("email", application.email);
     formData.append("fullName", application.fullName);
     formData.append("country", application.country);
@@ -25,16 +26,19 @@ const Application = () => {
       formData.append("CV", application.CV);
     }
     try {
-      const response = await axios.post("http://localhost:5000/job/cvs", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.post(
+        "http://localhost:5000/job/cvs",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
 
-      alert( response.data.message);
-     setFilePath(response.data.path)
+      alert(response.data.message);
+      setFilePath(response.data.path);
     } catch (error) {
-      
       console.error("Error:", error?.message);
     }
   };
@@ -111,9 +115,7 @@ const Application = () => {
           Submit
         </Button>
       </Form>
-      <img src="http://localhost:5000/uploads/CV-1692175842541-955005609" alt="Uploaded CV" />
-
-
+      {/* <img src="http://localhost:5000/uploads/" alt="Uploaded CV" /> */}
     </Container>
   );
 };
