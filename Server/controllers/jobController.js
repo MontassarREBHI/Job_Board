@@ -5,10 +5,10 @@ const multer = require("multer");
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "/tmp/my-uploads");
+    cb(null, "./tmp/my-uploads");
   },
   filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9)+'.pdf'
     cb(null, file.fieldname + "-" + uniqueSuffix);
   },
 });
@@ -20,6 +20,11 @@ const fileUpload = upload.single("CV");
 const jobApply = async (req, res) => {
   const { email, fullName, country, phoneNumber } = req.body;
   const CVFile = req.file;
+ const newApplication = new Application({email, fullName, country, phoneNumber,CV:CVFile.filename})
+ await newApplication.save()
+ newApplication? res.status(200).json({message:"new application was submitted successfully!",newApplication,
+ path:CVFile.path}):
+ res.status(400).send('something went wrong')
 };
 
 const addJob = async (req, res) => {
@@ -44,4 +49,4 @@ const jobList = async (req, res) => {
   }
 };
 
-module.exports = { addJob, jobList, fileUpload };
+module.exports = { addJob, jobList, fileUpload,jobApply };
