@@ -8,6 +8,7 @@ import Home from "./components/Home";
 import JobApply from "./components/JobApply";
 import AddJob from "./components/AddJob";
 import Application from "./components/Application";
+import Profile from "./components/Profile";
 function App() {
   return (
     <>
@@ -18,9 +19,10 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/register" element={<Register />} />
           <Route path="/signin" element={<Signin />} />
-          <Route path="/jobApply" element={<JobApply/>} />
-          <Route path="/Addjob" element={<AddJob/>} />
-          <Route path="/Application" element={<Application/>} />
+          <Route path="/jobApply" element={<JobApply />} />
+          <Route path="/Application" element={<Application />} />
+          <Route path="/Addjob" element={<AddJob />} />
+          <Route path="/profile" element={<Profile />} />
         </Routes>
       </Router>
     </>

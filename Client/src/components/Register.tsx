@@ -16,9 +16,9 @@ const Register: React.FC = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const navigate = useNavigate();
-  const selectedJob = useSelector((state) =>  state.job.value);
+  const selectedJob = useSelector((state) => state.job.value);
   // const emailRegex = "/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,4}$/";
-  console.log(selectedJob)
+
   const registUser = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     confirmPassword === password

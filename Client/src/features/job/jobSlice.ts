@@ -3,23 +3,23 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 
 export interface JobState {
   value: {
-    id: number;
+    _id: string;
     title: string;
     description: string;
     imageUrl: string;
-    companyDesc:string;
-    jobRequirement:string;
-  }
+    companyDesc: string;
+    jobRequirement: string;
+  };
 }
 
 const initialState: JobState = {
   value: {
-    id: 0,
+    _id: "",
     title: "",
     description: "",
     imageUrl: "",
-    companyDesc:'',
-    jobRequirement:'',
+    companyDesc: "",
+    jobRequirement: "",
   },
 };
 
@@ -27,7 +27,7 @@ export const jobSlice = createSlice({
   name: "job",
   initialState,
   reducers: {
-    selectOffer: (state, action: PayloadAction<JobState['value']>) => {
+    selectOffer: (state, action: PayloadAction<JobState["value"]>) => {
       state.value = action.payload;
     },
   },
