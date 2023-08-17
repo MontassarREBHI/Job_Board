@@ -11,6 +11,7 @@ const Application = () => {
     phoneNumber: 0,
     CV: null,
   });
+  const [filePath,setFilePath]=useState<string>('')
   const job = useSelector((state: RootState) => state.job.value);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -24,15 +25,17 @@ const Application = () => {
       formData.append("CV", application.CV);
     }
     try {
-      const response = await axios.post("your_backend_endpoint", formData, {
+      const response = await axios.post("http://localhost:5000/job/cvs", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
 
-      console.log("Response:", response.data);
+      alert( response.data.message);
+     setFilePath(response.data.path)
     } catch (error) {
-      console.error("Error:", error);
+      
+      console.error("Error:", error?.message);
     }
   };
 
@@ -97,9 +100,9 @@ const Application = () => {
             }
           />
         </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicCheckbox">
+        {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
           <Form.Check type="checkbox" label="Check me out" />
-        </Form.Group>
+        </Form.Group> */}
         <Button
           variant="primary"
           type="submit"
@@ -108,6 +111,9 @@ const Application = () => {
           Submit
         </Button>
       </Form>
+      <img src="http://localhost:5000/uploads/CV-1692175842541-955005609" alt="Uploaded CV" />
+
+
     </Container>
   );
 };

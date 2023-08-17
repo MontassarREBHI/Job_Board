@@ -1,5 +1,6 @@
 const express = require("express");
 require("dotenv").config();
+const path=require('path')
 const cors = require("cors");
 const port = process.env.PORT || 3000;
 const mongoose = require("mongoose");
@@ -11,6 +12,8 @@ app.use(express.json());
 app.use(cors());
 app.use("/user", userRoute);
 app.use("/job", jobRoute);
+app.use("/uploads", express.static(path.join(__dirname, "tmp", "my-uploads")));
+
 // Routes
 app.get("/", (req, res) => {
   res.send("Hello, world!");
