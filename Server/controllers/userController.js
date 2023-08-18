@@ -14,5 +14,13 @@ const addUser = async (req, res) => {
     res.status(500).send("Something went wrong");
   }
 };
+const getUserByEmail =async(req,res)=>{
+const {email}=req.params
+const user=await User.findOne({email})
+if (user) res.status(200).json({user,message:'user exist!'})
+else res.status(400).send('no user found')
 
-module.exports = { addUser };
+
+}
+
+module.exports = { addUser,getUserByEmail };
