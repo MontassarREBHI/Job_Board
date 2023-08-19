@@ -30,10 +30,10 @@ const Register: React.FC = () => {
               .post("http://localhost:5000/user", {
                 email: user.email,
                 role: "applicant",
-                phone:'',
-                 address:'',
-                  CV:'',
-                  name:''
+                phone: "",
+                address: "",
+                CV: "",
+                name: "",
               })
               .then((res) => {
                 console.log(res.data.message);
@@ -51,30 +51,39 @@ const Register: React.FC = () => {
       : alert("retype password correctly");
   };
   const signinWithGoogle = () => {
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential?.accessToken;
-        console.log(token);
-        // The signed-in user info.
-        const user = result.user;
+    signInWithPopup(auth, provider).then((result) => {
+      // This gives you a Google Access Token. You can use it to access the Google API.
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      const token = credential?.accessToken;
 
-        // IdP data available using getAdditionalUserInfo(result)
-        // ...
-        console.log(user);
-      })
-      .catch((error) => {
-        // Handle Errors here.
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorMessage, errorCode);
-        // The email of the user's account used.
-        // const email = error.customData.email;
-        // The AuthCredential type that was used.
-        // const credential = GoogleAuthProvider.credentialFromError(error);
-        // ...
-      });
+      // The signed-in user info.
+      const user = result.user;
+      axios
+        .post("http://localhost:5000/user", {
+          email: user.email,
+          role: "applicant",
+          phone: "",
+          address: "",
+          CV: "",
+          name: "",
+        })
+        .then((res) => {
+          console.log(res.data.message);
+          localStorage.setItem("email", `${user.email}`);
+          navigate("/");
+        })
+        .catch((error) => {
+          // Handle Errors here.
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log(errorMessage, errorCode);
+          // The email of the user's account used.
+          // const email = error.customData.email;
+          // The AuthCredential type that was used.
+          // const credential = GoogleAuthProvider.credentialFromError(error);
+          // ...
+        });
+    });
   };
   return (
     <Container>

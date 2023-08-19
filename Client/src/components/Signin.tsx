@@ -17,10 +17,10 @@ const Signin = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in
-         const user = userCredential.user;
-         
-        localStorage.setItem('email',`${user.email}`)
-         alert(`signed in successfully ${user}`);
+        const user = userCredential.user;
+
+        localStorage.setItem("email", `${user.email}`);
+        alert(`signed in successfully ${user}`);
 
         navigate("/");
       })
@@ -28,7 +28,7 @@ const Signin = () => {
         const errorCode = error.code;
         const errorMessage = error.message;
         alert("error occurred");
-        console.log(errorCode,errorMessage)
+        console.log(errorCode, errorMessage);
       });
   };
 
@@ -40,9 +40,12 @@ const Signin = () => {
         const token = credential.accessToken;
         // The signed-in user info.
         const user = result.user;
+        localStorage.setItem("email", `${user.email}`);
+
         // IdP data available using getAdditionalUserInfo(result)
         // ...
         alert("signed in successfully ");
+        navigate("/");
       })
       .catch((error) => {
         // Handle Errors here.
