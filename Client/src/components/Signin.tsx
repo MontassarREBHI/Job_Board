@@ -18,7 +18,10 @@ const Signin = () => {
       .then((userCredential) => {
         // Signed in
          const user = userCredential.user;
-        alert(`signed in successfully ${user}`);
+         
+        localStorage.setItem('email',`${user.email}`)
+         alert(`signed in successfully ${user}`);
+
         navigate("/");
       })
       .catch((error) => {
