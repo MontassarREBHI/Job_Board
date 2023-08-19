@@ -30,6 +30,10 @@ const Register: React.FC = () => {
               .post("http://localhost:5000/user", {
                 email: user.email,
                 role: "applicant",
+                phone:'',
+                 address:'',
+                  CV:'',
+                  name:''
               })
               .then((res) => {
                 console.log(res.data.message);

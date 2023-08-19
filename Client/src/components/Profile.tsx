@@ -1,3 +1,5 @@
+import { useState,useContext } from 'react'
+import { userContext } from '../contexts/ContextProvider';
 import {
   MDBCol,
   MDBContainer,
@@ -14,6 +16,10 @@ import {
 } from "mdb-react-ui-kit";
 
 export default function Profile() {
+  // const typeUser =useContext(userContext.use)
+  
+  const user = useContext(userContext)
+  
   return (
     <section style={{ backgroundColor: "#eee" }}>
       <MDBContainer className="py-5">
@@ -84,9 +90,10 @@ export default function Profile() {
                     <MDBCardText>Full Name</MDBCardText>
                   </MDBCol>
                   <MDBCol sm="9">
-                    <MDBCardText className="text-muted">
+                    <input value={user?.email}/>
+                    {/* <MDBCardText className="text-muted">
                       Johnatan Smith
-                    </MDBCardText>
+                    </MDBCardText> */}
                   </MDBCol>
                 </MDBRow>
                 <hr />
