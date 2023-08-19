@@ -23,14 +23,10 @@ const userContext = React.createContext<UserType | undefined>(undefined);
     address: "",
     CV: "",
   });
-  useEffect(()=>{
-    if(userInfo.email)
-    axios.get(`http://localhost:5000/user/${userInfo.email}`).then(res=> setUserInfo(res.data.user))
-    else return
-  },[userInfo.email])
+  
 
   return (
-    <userContext.Provider value={userInfo}>{children}</userContext.Provider>
+    <userContext.Provider value={{userInfo,setUserInfo}}>{children}</userContext.Provider>
   );
 };
 
