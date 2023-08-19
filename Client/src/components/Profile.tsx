@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext,useRef, useEffect } from "react";
 import { userContext } from "../contexts/ContextProvider";
 import {
   MDBCol,
@@ -21,10 +21,13 @@ import {
 import { Form } from "react-bootstrap";
 
 export default function Profile() {
+  const {userInfo} = useContext(userContext);
   // const typeUser =useContext(userContext.use)
-
-  const user = useContext(userContext);
-
+ const [nameState,setNameState]=useState<string|undefined>('')
+  useEffect(()=>{
+    setNameState(userInfo?.name)
+  },[])
+  
   return (
     <section style={{ backgroundColor: "#eee" }}>
       <MDBContainer className="py-5">
@@ -85,7 +88,7 @@ export default function Profile() {
                     <MDBCardText>Full Name</MDBCardText>
                   </MDBCol>
                   <MDBCol sm="9">
-                    <MDBInput id="typeName" type="text" value={user?.name} />
+                    <MDBInput   id="typeName" type="text" value= { nameState } onChange={(e)=>{setNameState(e.target.value)}} />
                   </MDBCol>
                 </MDBRow>
                 <hr />
@@ -94,7 +97,7 @@ export default function Profile() {
                     <MDBCardText>Email</MDBCardText>
                   </MDBCol>
                   <MDBCol sm="9">
-                    <MDBInput id="typeEmail" type="email" value={user?.email} />
+                    <MDBInput id="typeEmail" type="email" value={userInfo?.email} />
                   </MDBCol>
                 </MDBRow>
                 <hr />
@@ -103,7 +106,7 @@ export default function Profile() {
                     <MDBCardText>Phone</MDBCardText>
                   </MDBCol>
                   <MDBCol sm="9">
-                    <MDBInput value={user?.phone} id="typePhone" type="tel" />
+                    <MDBInput value={userInfo?.phone} id="typePhone" type="tel" />
                   </MDBCol>
                 </MDBRow>
                 <hr />
@@ -127,7 +130,7 @@ export default function Profile() {
                     <MDBInput
                       id="typeAddress"
                       type="text"
-                      value={user?.address}
+                      value={userInfo?.address}
                     />
                   </MDBCol>
                 </MDBRow>
