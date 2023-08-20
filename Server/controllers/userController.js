@@ -23,10 +23,16 @@ const getUserByEmail = async (req, res) => {
   else res.status(400).send("no user found");
 };
 
-const updateUserProfile = async(req,res)=>{
+const updateUserProfile = async (req, res) => {
   const { name, email, phone, address, CV, role } = req.body;
-  const user= await User.findOneAndUpdate({email},{ name, phone, address, CV, role },{new:true})
-user? res.status(200).json({user,message:'updated successfully!'}):res.status(400).send('something wrong')
-}
+  const user = await User.findOneAndUpdate(
+    { email },
+    { name, phone, address, CV, role },
+    { new: true }
+  );
+  user
+    ? res.status(200).json({ user, message: "updated successfully!" })
+    : res.status(400).send("something wrong");
+};
 
-module.exports = { addUser, getUserByEmail ,updateUserProfile};
+module.exports = { addUser, getUserByEmail, updateUserProfile };

@@ -1,4 +1,4 @@
-import { useState, useContext,useRef, useEffect } from "react";
+import { useState, useContext, useEffect } from "react";
 import { userContext } from "../contexts/ContextProvider";
 import {
   MDBCol,
@@ -9,8 +9,6 @@ import {
   MDBCardText,
   MDBCardBody,
   MDBCardImage,
-  MDBProgress,
-  MDBProgressBar,
   MDBCardHeader,
   MDBCardTitle,
   MDBCardFooter,
@@ -18,16 +16,22 @@ import {
   MDBListGroup,
   MDBListGroupItem,
 } from "mdb-react-ui-kit";
+import axios from "axios";
 import { Form } from "react-bootstrap";
 
 export default function Profile() {
-  const {userInfo} = useContext(userContext);
-  // const typeUser =useContext(userContext.use)
- const [nameState,setNameState]=useState<string|undefined>('')
-  useEffect(()=>{
-    setNameState(userInfo?.name)
-  },[])
-  
+  const { userInfo, setUserInfo } = useContext(userContext);
+
+  const updateInfo = () => {
+    axios
+      .put("http://localhost:5000/user/", userInfo)
+      .then((res) => {
+        setUserInfo(res.data.user);
+        alert(res.data.message);
+      })
+      .catch((err) => alert(err.message));
+  };
+
   return (
     <section style={{ backgroundColor: "#eee" }}>
       <MDBContainer className="py-5">
@@ -77,7 +81,9 @@ export default function Profile() {
               className="d-grid gap-2 col-6 mx-auto"
               style={{ marginTop: "5%" }}
             >
-              <MDBBtn color="success">Save changes</MDBBtn>
+              <MDBBtn color="success" onClick={updateInfo}>
+                Save changes
+              </MDBBtn>
             </div>
           </MDBCol>
           <MDBCol lg="8">
@@ -88,7 +94,16 @@ export default function Profile() {
                     <MDBCardText>Full Name</MDBCardText>
                   </MDBCol>
                   <MDBCol sm="9">
-                    <MDBInput   id="typeName" type="text" value= { nameState } onChange={(e)=>{setNameState(e.target.value)}} />
+                    <MDBInput
+                      id="typeName"
+                      type="text"
+                      value={userInfo?.name}
+                      onChange={(e) => {
+                        setUserInfo((prev) => {
+                          return { ...prev, name: e.target.value };
+                        });
+                      }}
+                    />
                   </MDBCol>
                 </MDBRow>
                 <hr />
@@ -97,7 +112,11 @@ export default function Profile() {
                     <MDBCardText>Email</MDBCardText>
                   </MDBCol>
                   <MDBCol sm="9">
-                    <MDBInput id="typeEmail" type="email" value={userInfo?.email} />
+                    <MDBInput
+                      id="typeEmail"
+                      type="email"
+                      value={userInfo?.email}
+                    />
                   </MDBCol>
                 </MDBRow>
                 <hr />
@@ -106,7 +125,16 @@ export default function Profile() {
                     <MDBCardText>Phone</MDBCardText>
                   </MDBCol>
                   <MDBCol sm="9">
-                    <MDBInput value={userInfo?.phone} id="typePhone" type="tel" />
+                    <MDBInput
+                      value={userInfo?.phone}
+                      id="typePhone"
+                      type="tel"
+                      onChange={(e) => {
+                        setUserInfo((prev) => {
+                          return { ...prev, phone: e.target.value };
+                        });
+                      }}
+                    />
                   </MDBCol>
                 </MDBRow>
                 <hr />
@@ -115,9 +143,17 @@ export default function Profile() {
                     <MDBCardText>Role</MDBCardText>
                   </MDBCol>
                   <MDBCol sm="9">
-                    <Form.Select aria-label="Default select example">
-                      <option value="1">applicant</option>
-                      <option value="2">employer</option>
+                    <Form.Select
+                      aria-label="Default select example"
+                      value={userInfo?.role}
+                      onChange={(e) => {
+                        setUserInfo((prev) => {
+                          return { ...prev, role: e.target.value };
+                        });
+                      }}
+                    >
+                      <option value="applicant">applicant</option>
+                      <option value="employer">employer</option>
                     </Form.Select>
                   </MDBCol>
                 </MDBRow>
@@ -131,6 +167,11 @@ export default function Profile() {
                       id="typeAddress"
                       type="text"
                       value={userInfo?.address}
+                      onChange={(e) => {
+                        setUserInfo((prev) => {
+                          return { ...prev, address: e.target.value };
+                        });
+                      }}
                     />
                   </MDBCol>
                 </MDBRow>

@@ -40,9 +40,16 @@ const jobApply = async (req, res) => {
 };
 
 const addJob = async (req, res) => {
-  const { title, companyDesc, requirement, description } = req.body;
+  const { title, companyDesc, requirement, description, employerEmail } =
+    req.body;
   try {
-    const job = new Job({ title, companyDesc, requirement, description });
+    const job = new Job({
+      title,
+      companyDesc,
+      requirement,
+      description,
+      employerEmail,
+    });
     await job.save();
     res.status(200).json({ job, message: "job offer created successfully" });
   } catch (error) {
