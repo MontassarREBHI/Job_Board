@@ -8,6 +8,7 @@ const AddJob = () => {
     requirement: "",
     description: "",
     companyDesc: "",
+    employerEmail: localStorage.getItem("email"),
   });
   const submitOffer = () => {
     if (Object.values(newJob).every((value) => value !== "")) {

@@ -1,4 +1,4 @@
-import React, { useState,useContext } from "react";
+import React, { useState, useContext } from "react";
 import { userContext } from "../contexts/ContextProvider";
 import {
   signInWithEmailAndPassword,
@@ -6,12 +6,12 @@ import {
   GoogleAuthProvider,
   sendPasswordResetEmail,
 } from "firebase/auth";
-import axios from 'axios'
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { auth, provider } from "../config/firebaseConfig";
 import { Container, Form, Button, Col, Nav, Row } from "react-bootstrap";
 const Signin = () => {
-  const {setUserInfo} = useContext(userContext)
+  const { setUserInfo } = useContext(userContext);
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const navigate = useNavigate();
@@ -22,10 +22,12 @@ const Signin = () => {
         // Signed in
         const user = userCredential.user;
 
-       localStorage.setItem("email", `${user.email}`);
-   
-   axios.get(`http://localhost:5000/user/${localStorage.getItem("email")}`).then(res=> setUserInfo(res.data.user))
-  
+        localStorage.setItem("email", `${user.email}`);
+
+        axios
+          .get(`http://localhost:5000/user/${localStorage.getItem("email")}`)
+          .then((res) => setUserInfo(res.data.user));
+
         alert(`signed in successfully ${user}`);
 
         navigate("/");

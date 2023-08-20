@@ -12,6 +12,11 @@ const jobSchema = new Schema({
     required: true,
     unique: false,
   },
+  employerEmail: {
+    type: String,
+    required: true,
+    unique: false,
+  },
   requirement: {
     type: String,
     required: true,
