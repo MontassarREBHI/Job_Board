@@ -9,6 +9,7 @@ import JobApply from "./components/JobApply";
 import AddJob from "./components/AddJob";
 import Application from "./components/Application";
 import Profile from "./components/Profile";
+import EmployerDashboard from "./components/EmployerDashboard";
 function App() {
   return (
     <>
@@ -23,6 +24,7 @@ function App() {
           <Route path="/Application" element={<Application />} />
           <Route path="/Addjob" element={<AddJob />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/dash" element={<EmployerDashboard />} />
         </Routes>
       </Router>
     </>
