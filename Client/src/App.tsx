@@ -10,12 +10,13 @@ import AddJob from "./components/AddJob";
 import Application from "./components/Application";
 import Profile from "./components/Profile";
 import EmployerDashboard from "./components/EmployerDashboard";
+import JobApplications from "./components/JobApplications";
 function App() {
   return (
     <>
       <Router>
         <NavBar />
-    
+
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/register" element={<Register />} />
@@ -25,6 +26,7 @@ function App() {
           <Route path="/Addjob" element={<AddJob />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/dash" element={<EmployerDashboard />} />
+          <Route path="/applications" element={<JobApplications />} />
         </Routes>
       </Router>
     </>

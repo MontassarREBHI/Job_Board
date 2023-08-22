@@ -6,9 +6,9 @@ export interface JobState {
     _id: string;
     title: string;
     description: string;
-    imageUrl: string;
     companyDesc: string;
     jobRequirement: string;
+    employerEmail: string;
   };
 }
 
@@ -17,9 +17,9 @@ const initialState: JobState = {
     _id: "",
     title: "",
     description: "",
-    imageUrl: "",
     companyDesc: "",
     jobRequirement: "",
+    employerEmail: "",
   },
 };
 

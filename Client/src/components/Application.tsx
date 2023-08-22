@@ -2,6 +2,7 @@ import { Button, Container, Form } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { RootState } from "../app/store.js";
 import { useState } from "react";
+import moment from "moment";
 import axios from "axios";
 const Application = () => {
   const [application, setApplication] = useState({
@@ -21,6 +22,7 @@ const Application = () => {
     formData.append("email", application.email);
     formData.append("fullName", application.fullName);
     formData.append("country", application.country);
+    formData.append("applyDate", moment().format("L"));
     formData.append("phoneNumber", String(application.phoneNumber));
     if (application.CV) {
       formData.append("CV", application.CV);
