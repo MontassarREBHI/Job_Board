@@ -68,4 +68,26 @@ const jobList = async (req, res) => {
   }
 };
 
-module.exports = { addJob, jobList, fileUpload, jobApply };
+const getListByEmployer = async (req, res) => {
+  const { email } = req.params;
+  const listOfJobs = await Job.find({ employerEmail: email });
+  listOfJobs.length
+    ? res.status(200).json({ listOfJobs, message: "here is the list!" })
+    : res.status(400).send("no job found");
+};
+// get application by post 
+const getApplicationByPost = async (req, res) => {
+  const { id } = req.params;
+  const applicationToThisJob = await Application.find({ jobID: mongoose.Types.ObjectId(id) });
+  console.log(applicationToThisJob)
+  applicationToThisJob.length>0
+    ? res
+        .status(200)
+        .json({
+          applicationToThisJob,
+          message: "here are the post's application ",
+        })
+    : res.status(400).send("no application found or something went wrong");
+};
+
+module.exports = { addJob, jobList, fileUpload, jobApply, getListByEmployer,getApplicationByPost };
