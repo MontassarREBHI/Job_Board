@@ -19,7 +19,7 @@ const upload = multer({ storage: storage });
 const fileUpload = upload.single("CV");
 
 const jobApply = async (req, res) => {
-  const { jobID, email, fullName, country, phoneNumber } = req.body;
+  const { jobID, email, fullName, country, phoneNumber, applyDate } = req.body;
   const CVFile = req.file;
   const newApplication = new Application({
     jobID,
@@ -28,6 +28,7 @@ const jobApply = async (req, res) => {
     country,
     phoneNumber,
     CV: CVFile.filename,
+    applyDate,
   });
   await newApplication.save();
   newApplication
@@ -75,19 +76,26 @@ const getListByEmployer = async (req, res) => {
     ? res.status(200).json({ listOfJobs, message: "here is the list!" })
     : res.status(400).send("no job found");
 };
-// get application by post 
+// get application by post
 const getApplicationByPost = async (req, res) => {
   const { id } = req.params;
-  const applicationToThisJob = await Application.find({ jobID: mongoose.Types.ObjectId(id) });
-  console.log(applicationToThisJob)
-  applicationToThisJob.length>0
-    ? res
-        .status(200)
-        .json({
-          applicationToThisJob,
-          message: "here are the post's application ",
-        })
+  const applicationToThisJob = await Application.find({
+    jobID: id,
+  });
+  console.log(applicationToThisJob);
+  applicationToThisJob.length > 0
+    ? res.status(200).json({
+        applicationToThisJob,
+        message: "here are the post's application ",
+      })
     : res.status(400).send("no application found or something went wrong");
 };
 
-module.exports = { addJob, jobList, fileUpload, jobApply, getListByEmployer,getApplicationByPost };
+module.exports = {
+  addJob,
+  jobList,
+  fileUpload,
+  jobApply,
+  getListByEmployer,
+  getApplicationByPost,
+};
