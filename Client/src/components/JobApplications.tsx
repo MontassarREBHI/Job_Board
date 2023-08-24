@@ -2,7 +2,7 @@ import { RootState } from "../app/store.js";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { Table } from "react-bootstrap";
+import { Table, Form } from "react-bootstrap";
 
 export default function JobApplications() {
   const [applications, setApplicantions] = useState([]);
@@ -15,6 +15,13 @@ export default function JobApplications() {
         setApplicantions(res.data.applicationToThisJob);
       });
   }, []);
+  const handleStatus = (e, id: string) => {
+    e.preventDefault();
+    axios
+      .put("http://localhost:5000/job", { id: id, status: e.target.value })
+      .then((res) => console.log(res.data.message))
+      .catch((err) => err.message);
+  };
   return (
     <div style={{ marginTop: "2%" }}>
       <h2 style={{ textAlign: "center", marginBottom: "2%" }}>
@@ -31,6 +38,7 @@ export default function JobApplications() {
               <th>Country</th>
               <th>application date</th>
               <th>CV link</th>
+              <th>Status</th>
             </tr>
           </thead>
           <tbody>
@@ -51,6 +59,16 @@ export default function JobApplications() {
                     >
                       {application.CV}
                     </a>
+                  </td>
+                  <td>
+                    <Form.Select
+                      aria-label="Default select example"
+                      onChange={(e) => handleStatus(e, application._id)}
+                    >
+                      <option value="pending">pending</option>
+                      <option value="rejected">rejected</option>
+                      <option value="accepted">accepted</option>
+                    </Form.Select>{" "}
                   </td>
                 </tr>
               );
