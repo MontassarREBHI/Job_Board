@@ -91,11 +91,13 @@ const getApplicationByPost = async (req, res) => {
     : res.status(400).send("no application found or something went wrong");
 };
 
+
+
 module.exports = {
   addJob,
   jobList,
   fileUpload,
   jobApply,
   getListByEmployer,
-  getApplicationByPost,
+  getApplicationByPost
 };
