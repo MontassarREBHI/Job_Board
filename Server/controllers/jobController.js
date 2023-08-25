@@ -82,7 +82,7 @@ const getApplicationByPost = async (req, res) => {
   const applicationToThisJob = await Application.find({
     jobID: id,
   });
-  console.log(applicationToThisJob);
+ 
   applicationToThisJob.length > 0
     ? res.status(200).json({
         applicationToThisJob,
@@ -91,13 +91,11 @@ const getApplicationByPost = async (req, res) => {
     : res.status(400).send("no application found or something went wrong");
 };
 
-
-
 module.exports = {
   addJob,
   jobList,
   fileUpload,
   jobApply,
   getListByEmployer,
-  getApplicationByPost
+  getApplicationByPost,
 };

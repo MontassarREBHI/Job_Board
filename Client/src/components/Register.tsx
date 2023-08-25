@@ -1,5 +1,5 @@
 import { Container, Form, Button, Col } from "react-bootstrap";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   createUserWithEmailAndPassword,
@@ -7,17 +7,18 @@ import {
   GoogleAuthProvider,
 } from "firebase/auth";
 import { useSelector } from "react-redux";
-
+import { Alert } from "react-bootstrap";
 import axios from "axios";
 import { auth, provider } from "../config/firebaseConfig";
 
 const Register: React.FC = () => {
+  const [signUpAlert, setSignUpAlert] = useState(false);
   const [email, setEmail] = useState<string>("");
+  const [newRole, setNewRole] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const navigate = useNavigate();
   const selectedJob = useSelector((state) => state.job.value);
-  // const emailRegex = "/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,4}$/";
 
   const registUser = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -29,14 +30,14 @@ const Register: React.FC = () => {
             axios
               .post("http://localhost:5000/user", {
                 email: user.email,
-                role: "applicant",
+                role: newRole || "applicant",
                 phone: null,
                 address: null,
                 CV: null,
                 name: null,
               })
-              .then((res) => {
-                console.log(res.data.message);
+              .then(async () => {
+                setSignUpAlert(true);
                 navigate("/signin");
               })
               .catch((err) => console.log(err.message));
@@ -61,82 +62,101 @@ const Register: React.FC = () => {
       axios
         .post("http://localhost:5000/user", {
           email: user.email,
-          role: "applicant",
+          role: newRole || "applicant",
           phone: null,
           address: null,
           CV: null,
           name: null,
         })
         .then((res) => {
-          console.log(res.data.message);
+          // console.log(res.data.user);
           localStorage.setItem("email", `${user.email}`);
-          navigate("/");
+          setSignUpAlert(true);
+          res.data?.user?.role === "applicant" ||
+          res.data?.existingUser?.role === "applicant"
+            ? navigate("/home")
+            : navigate("/dash");
         })
         .catch((error) => {
-          // Handle Errors here.
           const errorCode = error.code;
           const errorMessage = error.message;
           console.log(errorMessage, errorCode);
-          // The email of the user's account used.
-          // const email = error.customData.email;
-          // The AuthCredential type that was used.
-          // const credential = GoogleAuthProvider.credentialFromError(error);
-          // ...
         });
     });
   };
   return (
-    <Container>
-      <Form onSubmit={(e) => registUser(e)}>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>Email address</Form.Label>
-          <Form.Control
-            type="email"
-            placeholder="Enter email"
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-          <Form.Text className="text-muted">
-            We'll never share your email with anyone else.
-          </Form.Text>
-        </Form.Group>
-
-        <Form.Group className="mb-3" controlId="formBasicPassword">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type="password"
-            placeholder="Password"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicPassword">
-          <Form.Label>Confirm Password</Form.Label>
-          <Form.Control
-            type="password"
-            placeholder="re-type Password"
-            onChange={(e) => setConfirmPassword(e.target.value)}
-          />
-        </Form.Group>
-
-        <Button variant="primary" type="submit">
-          Sign Up
-        </Button>
-      </Form>
-      <Button
-        style={{ border: "solid black", marginTop: 5 }}
-        onClick={signinWithGoogle}
+    <>
+      {signUpAlert && (
+        <Alert
+          variant="success"
+          onClose={() => setSignUpAlert(false)}
+          dismissible
+        >
+          account registred successfully
+        </Alert>
+      )}
+      <Container
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          marginTop: "5%",
+        }}
       >
-        <Col>
-          <a
-            className="btn btn-lg btn-google btn-block text-uppercase btn-outline"
-            href="#"
+        <Form onSubmit={(e) => registUser(e)}>
+          <p>Employer or job seeker</p>
+          <Form.Select
+            aria-label="your role "
+            onChange={(e) => setNewRole(e.target.value)}
           >
+            <option value="applicant">applicant</option>
+            <option value="employer">employer</option>
+          </Form.Select>
+          <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Label>Email address</Form.Label>
+            <Form.Control
+              type="email"
+              placeholder="Enter email"
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+            <Form.Text className="text-muted">
+              We'll never share your email with anyone else.
+            </Form.Text>
+          </Form.Group>
+
+          <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Label>Password</Form.Label>
+            <Form.Control
+              type="password"
+              placeholder="Password"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Label>Confirm Password</Form.Label>
+            <Form.Control
+              type="password"
+              placeholder="re-type Password"
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
+          </Form.Group>
+
+          <Button variant="primary" type="submit">
+            Sign Up
+          </Button>
+          <Button style={{ marginLeft: "10%" }} onClick={signinWithGoogle}>
+            {/* <a
+              className="btn btn-lg btn-google btn-block text-uppercase btn-outline"
+              href="#"
+            > */}
             <img src="https://img.icons8.com/color/16/000000/google-logo.png" />
-            Signup Using Google
-          </a>
-        </Col>
-      </Button>
-    </Container>
+            Google signup
+            {/* </a> */}
+          </Button>
+        </Form>
+      </Container>
+    </>
   );
 };
 
