@@ -7,11 +7,11 @@ function NavBar(): JSX.Element {
     <Navbar bg="primary" data-bs-theme="dark">
       <Container>
         <Navbar.Brand href="#home">
-          <Link to="/">Home</Link>
+          <Link to="/home">Home</Link>
         </Navbar.Brand>
         <Nav className="me-auto">
           <Nav.Link href="#home">
-            <Link to="/register">Sign up</Link>
+            <Link to="/">Sign up</Link>
           </Nav.Link>
           <Nav.Link href="#features">
             <Link to="/signin">Sign in</Link>

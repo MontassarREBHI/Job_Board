@@ -137,26 +137,7 @@ export default function Profile() {
                     />
                   </MDBCol>
                 </MDBRow>
-                <hr />
-                <MDBRow>
-                  <MDBCol sm="3">
-                    <MDBCardText>Role</MDBCardText>
-                  </MDBCol>
-                  <MDBCol sm="9">
-                    <Form.Select
-                      aria-label="Default select example"
-                      value={userInfo?.role}
-                      onChange={(e) => {
-                        setUserInfo((prev) => {
-                          return { ...prev, role: e.target.value };
-                        });
-                      }}
-                    >
-                      <option value="applicant">applicant</option>
-                      <option value="employer">employer</option>
-                    </Form.Select>
-                  </MDBCol>
-                </MDBRow>
+
                 <hr />
                 <MDBRow>
                   <MDBCol sm="3">

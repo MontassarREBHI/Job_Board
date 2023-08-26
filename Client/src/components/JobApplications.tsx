@@ -2,10 +2,12 @@ import { RootState } from "../app/store.js";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { Table, Form } from "react-bootstrap";
+import { Table, Form, Button, Row, Col, Alert } from "react-bootstrap";
 
 export default function JobApplications() {
   const [applications, setApplicantions] = useState([]);
+  const [newStatus, setNewStatus] = useState("");
+  const [alert, setAlert] = useState(false);
   const job = useSelector((state: RootState) => state.job.value);
 
   useEffect(() => {
@@ -15,15 +17,21 @@ export default function JobApplications() {
         setApplicantions(res.data.applicationToThisJob);
       });
   }, []);
-  const handleStatus = (e, id: string) => {
+  const handleStatus = async (e, id: string) => {
     e.preventDefault();
-    axios
-      .put("http://localhost:5000/job", { id: id, status: e.target.value })
+    await axios
+      .put("http://localhost:5000/job", { id: id, status: newStatus })
       .then((res) => console.log(res.data.message))
       .catch((err) => err.message);
+    setAlert(true);
   };
   return (
-    <div style={{ marginTop: "2%" }}>
+    <div style={{ margin: "4%" }}>
+      {alert && (
+        <Alert variant="success" onClose={() => setAlert(false)} dismissible>
+          status updated, applicant will be notified via email
+        </Alert>
+      )}
       <h2 style={{ textAlign: "center", marginBottom: "2%" }}>
         List of applicants to the post of {job.title}
       </h2>
@@ -61,14 +69,27 @@ export default function JobApplications() {
                     </a>
                   </td>
                   <td>
-                    <Form.Select
-                      aria-label="Default select example"
-                      onChange={(e) => handleStatus(e, application._id)}
-                    >
-                      <option value="pending">pending</option>
-                      <option value="rejected">rejected</option>
-                      <option value="accepted">accepted</option>
-                    </Form.Select>{" "}
+                    <Row>
+                      <Col xs={8}>
+                        <Form.Select
+                          aria-label="Default select example"
+                          onChange={(e) => setNewStatus(e.target.value)}
+                        >
+                          <option value="pending">pending</option>
+                          <option value="rejected">rejected</option>
+                          <option value="accepted">accepted</option>
+                        </Form.Select>
+                      </Col>
+                      <Col xs={4}>
+                        <Button
+                          onClick={(e) => {
+                            handleStatus(e, application._id);
+                          }}
+                        >
+                          save
+                        </Button>
+                      </Col>
+                    </Row>
                   </td>
                 </tr>
               );
