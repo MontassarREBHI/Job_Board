@@ -1,5 +1,6 @@
-import { Container, Form, Button, Col } from "react-bootstrap";
-import { useEffect, useState } from "react";
+import { Container, Form, Button } from "react-bootstrap";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import {
   createUserWithEmailAndPassword,
@@ -68,14 +69,11 @@ const Register: React.FC = () => {
           CV: null,
           name: null,
         })
-        .then((res) => {
+        .then(() => {
           // console.log(res.data.user);
           localStorage.setItem("email", `${user.email}`);
           setSignUpAlert(true);
-          res.data?.user?.role === "applicant" ||
-          res.data?.existingUser?.role === "applicant"
-            ? navigate("/home")
-            : navigate("/dash");
+          navigate("/signin");
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -154,6 +152,9 @@ const Register: React.FC = () => {
             Google signup
             {/* </a> */}
           </Button>
+          <div className="mt-3 text-center">
+            Already have an account? <Link to="/signin">Sign in</Link>
+          </div>
         </Form>
       </Container>
     </>

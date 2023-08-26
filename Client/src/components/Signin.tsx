@@ -6,6 +6,7 @@ import {
   GoogleAuthProvider,
   sendPasswordResetEmail,
 } from "firebase/auth";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { auth, provider } from "../config/firebaseConfig";
@@ -29,6 +30,7 @@ const Signin = () => {
           .then((res) => {
             setUserInfo(res.data.user);
             alert(`signed in successfully ${user}`);
+            sessionStorage.setItem("loggedIn", "true");
             //navigate based on the user role (applicant or employer)
             res.data.user.role === "applicant"
               ? navigate("/home")
@@ -52,11 +54,16 @@ const Signin = () => {
         // The signed-in user info.
         const user = result.user;
         localStorage.setItem("email", `${user.email}`);
-
-        // IdP data available using getAdditionalUserInfo(result)
-        // ...
-        alert("signed in successfully ");
-        navigate("/home");
+        axios
+          .get(`http://localhost:5000/user/${localStorage.getItem("email")}`)
+          .then((res) => {
+            setUserInfo(res.data.user);
+            alert("signed in successfully ");
+            sessionStorage.setItem("loggedIn", "true");
+            res.data.user?.role === "applicant"
+              ? navigate("/home")
+              : navigate("/dash");
+          });
       })
       .catch((error) => {
         // Handle Errors here.
@@ -102,7 +109,6 @@ const Signin = () => {
                 We'll never share your email with anyone else.
               </Form.Text>
             </Form.Group>
-
             <Form.Group className="mb-3" controlId="formBasicPassword">
               <Form.Label>Password</Form.Label>
               <Form.Control
@@ -111,36 +117,47 @@ const Signin = () => {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </Form.Group>
-
-            <Button variant="primary" type="submit">
-              Sign In
-            </Button>
-            <Row style={{ marginTop: "5%" }}>
-              <Col xs={6}> Forgot password ?</Col>
-              <Col xs={3}>
-                <Nav.Link onClick={resetPassword}>Click here</Nav.Link>
+            <Row>
+              <Col>
+                <Button variant="primary" type="submit">
+                  Sign In
+                </Button>
+              </Col>
+              <Col>
+                <Button onClick={signinWithGoogle}>
+                  <img src="https://img.icons8.com/color/16/000000/google-logo.png" />
+                  Google Signin
+                </Button>
               </Col>
             </Row>
-
-            {/* <p onClick={()=>()}>sign in</p> */}
+            <Row style={{ marginTop: "5%" }}>
+              <Col xs={2}></Col>
+              <Col xs={10}>
+                <Nav.Link onClick={resetPassword}>
+                  Forgot password ?{" "}
+                  <span
+                    style={{
+                      color: "blue",
+                      textDecoration: "underline",
+                      fontWeight: "bold",
+                    }}
+                    className="mt-3"
+                  >
+                    {" "}
+                    Click here
+                  </span>
+                </Nav.Link>
+              </Col>
+            </Row>
+            <div className="mt-3 text-center">
+              Already have an account?{" "}
+              <Link style={{ color: "blue", fontWeight: "bold" }} to="/signin">
+                Sign in
+              </Link>
+            </div>
           </Form>
         </Col>
-        <Col xs={4}></Col>
       </Row>
-      <Button
-        style={{ border: "solid black", marginTop: "3%" }}
-        onClick={signinWithGoogle}
-      >
-        <Col>
-          <a
-            className="btn btn-lg btn-google btn-block text-uppercase btn-outline"
-            href="#"
-          >
-            <img src="https://img.icons8.com/color/16/000000/google-logo.png" />
-            Signin Using Google
-          </a>
-        </Col>
-      </Button>
     </Container>
   );
 };
