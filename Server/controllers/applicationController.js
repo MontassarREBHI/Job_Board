@@ -21,8 +21,16 @@ const manageApplication = async (req, res) => {
     subject: "Application status",
     text:
       applicationOutcome.status === "accepted"
-        ? generateAcceptanceEmail(applicationOutcome.fullName, job.companyDesc,job.title)
-        : generateRejectionEmail(applicationOutcome.fullName, job.companyDesc,job.title),
+        ? generateAcceptanceEmail(
+            applicationOutcome.fullName,
+            job.companyDesc,
+            job.title
+          )
+        : generateRejectionEmail(
+            applicationOutcome.fullName,
+            job.companyDesc,
+            job.title
+          ),
   };
 
   if (applicationOutcome) {

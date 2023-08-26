@@ -21,7 +21,6 @@ function App() {
     <>
       <Router>
         <NavBar />
-
         <Routes>
           <Route path="/home" element={<Home />} />
           <Route path="/" element={<Register />} />
