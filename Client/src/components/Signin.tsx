@@ -26,11 +26,14 @@ const Signin = () => {
 
         axios
           .get(`http://localhost:5000/user/${localStorage.getItem("email")}`)
-          .then((res) => setUserInfo(res.data.user));
-
-        alert(`signed in successfully ${user}`);
-
-        navigate("/");
+          .then((res) => {
+            setUserInfo(res.data.user);
+            alert(`signed in successfully ${user}`);
+            //navigate based on the user role (applicant or employer)
+            res.data.user.role === "applicant"
+              ? navigate("/home")
+              : navigate("/dash");
+          });
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -53,7 +56,7 @@ const Signin = () => {
         // IdP data available using getAdditionalUserInfo(result)
         // ...
         alert("signed in successfully ");
-        navigate("/");
+        navigate("/home");
       })
       .catch((error) => {
         // Handle Errors here.

@@ -82,7 +82,7 @@ const getApplicationByPost = async (req, res) => {
   const applicationToThisJob = await Application.find({
     jobID: id,
   });
-  console.log(applicationToThisJob);
+ 
   applicationToThisJob.length > 0
     ? res.status(200).json({
         applicationToThisJob,
