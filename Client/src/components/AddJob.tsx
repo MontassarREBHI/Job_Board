@@ -1,5 +1,6 @@
-import { Button, FloatingLabel, Form } from "react-bootstrap";
+import { Button, FloatingLabel, Form, Nav } from "react-bootstrap";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -23,6 +24,13 @@ const AddJob = () => {
 
   return (
     <div style={{ margin: "5%", height: "100%" }}>
+      <Nav.Link
+        as={Link}
+        to="/dash"
+        style={{ marginBottom: "2%", color: "blue" }}
+      >
+        Back to Dashboard ↺
+      </Nav.Link>
       <FloatingLabel
         controlId="floatingTextarea"
         label="Company Description"

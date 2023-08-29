@@ -15,7 +15,7 @@ function NavBar(): JSX.Element {
       : signOut(auth)
           .then(() => {
             localStorage.removeItem("email");
-            sessionStorage.setItem("loggedIn", "false");
+            sessionStorage.removeItem("loggedIn");
             setLoggedIn("false");
           })
           .catch((error) => {
@@ -34,7 +34,11 @@ function NavBar(): JSX.Element {
           </Nav.Link>
           <Nav.Link>
             <Link to="/signin" onClick={logOut}>
-              Sign {loggedIn === "true" ? "out" : "in"}
+              Sign{" "}
+              {loggedIn === "true" ||
+              sessionStorage.getItem("loggedIn") === "true"
+                ? "out"
+                : "in"}
             </Link>
           </Nav.Link>
         </Nav>
