@@ -96,7 +96,7 @@ const Signin = () => {
 
   return (
     <Container>
-      <Row style={{ marginTop: "10%" }}>
+      <Row className="mt-5">
         <Col xs={4}></Col>
         <Col xs={4}>
           <Form onSubmit={(e) => signIn(e)}>
@@ -119,24 +119,31 @@ const Signin = () => {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </Form.Group>
-            <Row>
+            <Row className="mt-3">
               <Col>
-                <Button variant="primary" type="submit">
+                <Button variant="primary" type="submit" className="w-100">
                   Sign In
                 </Button>
               </Col>
               <Col>
-                <Button onClick={signinWithGoogle}>
-                  <img src="https://img.icons8.com/color/16/000000/google-logo.png" />
+                <Button
+                  className="d-flex align-items-center justify-content-center w-100 mt-2 mt-md-0"
+                  onClick={signinWithGoogle}
+                >
+                  <img
+                    src="https://img.icons8.com/color/16/000000/google-logo.png"
+                    alt="Google Logo"
+                    className="me-2"
+                  />
                   Google Signin
                 </Button>
               </Col>
             </Row>
-            <Row style={{ marginTop: "5%" }}>
+            <Row className="mt-3">
               <Col xs={2}></Col>
               <Col xs={10}>
                 <Nav.Link onClick={resetPassword}>
-                  Forgot password ?{" "}
+                  Forgot password?{" "}
                   <span
                     style={{
                       color: "blue",
@@ -145,7 +152,6 @@ const Signin = () => {
                     }}
                     className="mt-3"
                   >
-                    {" "}
                     Click here
                   </span>
                 </Nav.Link>

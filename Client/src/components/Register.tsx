@@ -90,31 +90,28 @@ const Register: React.FC = () => {
           onClose={() => setSignUpAlert(false)}
           dismissible
         >
-          account registred successfully
+          Account registered successfully.
         </Alert>
       )}
-      <Container
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          marginTop: "5%",
-        }}
-      >
+      <Container className="d-flex justify-content-center align-items-center mt-5">
         <Form onSubmit={(e) => registUser(e)}>
-          <p>Employer or job seeker</p>
-          <Form.Select
-            aria-label="your role "
-            onChange={(e) => setNewRole(e.target.value)}
-          >
-            <option value="applicant">applicant</option>
-            <option value="employer">employer</option>
-          </Form.Select>
-          <Form.Group className="mb-3" controlId="formBasicEmail">
+          <h2>Sign Up</h2>
+          <Form.Group className="mb-3" controlId="role">
+            <Form.Label>Employer or job seeker ?</Form.Label>
+            <Form.Select
+              aria-label="Select your role"
+              onChange={(e) => setNewRole(e.target.value)}
+            >
+              <option value="applicant">applicant</option>
+              <option value="employer">employer</option>
+            </Form.Select>
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="email">
             <Form.Label>Email address</Form.Label>
             <Form.Control
               type="email"
               placeholder="Enter email"
+              value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
             />
@@ -122,36 +119,40 @@ const Register: React.FC = () => {
               We'll never share your email with anyone else.
             </Form.Text>
           </Form.Group>
-
-          <Form.Group className="mb-3" controlId="formBasicPassword">
+          <Form.Group className="mb-3" controlId="password">
             <Form.Label>Password</Form.Label>
             <Form.Control
               type="password"
               placeholder="Password"
+              value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
           </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicPassword">
+          <Form.Group className="mb-3" controlId="confirmPassword">
             <Form.Label>Confirm Password</Form.Label>
             <Form.Control
               type="password"
-              placeholder="re-type Password"
+              placeholder="Re-type Password"
+              value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
             />
           </Form.Group>
-
-          <Button variant="primary" type="submit">
-            Sign Up
-          </Button>
-          <Button style={{ marginLeft: "10%" }} onClick={signinWithGoogle}>
-            {/* <a
-              className="btn btn-lg btn-google btn-block text-uppercase btn-outline"
-              href="#"
-            > */}
-            <img src="https://img.icons8.com/color/16/000000/google-logo.png" />
-            Google signup
-            {/* </a> */}
-          </Button>
+          <div className="d-flex">
+            <Button variant="primary" type="submit">
+              Sign Up
+            </Button>
+            <Button
+              className="ms-12 d-flex align-items-center"
+              onClick={signinWithGoogle}
+            >
+              <img
+                src="https://img.icons8.com/color/16/000000/google-logo.png"
+                alt="Google Logo"
+                className="me-2"
+              />
+              Google signup
+            </Button>
+          </div>
           <div className="mt-3 text-center">
             Already have an account? <Link to="/signin">Sign in</Link>
           </div>

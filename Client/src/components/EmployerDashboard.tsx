@@ -1,6 +1,7 @@
 import React from "react";
 import { Nav } from "react-bootstrap";
 import axios from "axios";
+import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import {
   MDBCol,
@@ -15,6 +16,7 @@ import {
 } from "mdb-react-ui-kit";
 import { useDispatch } from "react-redux";
 import { selectOffer } from "../features/job/jobSlice";
+import EmployerGraphs from "./EmployerGraphs";
 const { useState, useEffect } = React;
 interface jobListType {
   _id: string;
@@ -35,6 +37,7 @@ const EmployerDashboard = () => {
   const navigate = useNavigate();
   const [jobList, setJobList] = useState<jobListType[]>([]);
   const [openPosts, setOpenPosts] = useState<boolean>(false);
+  const [openGraphs, setOpenGraphs] = useState<boolean>(false);
   useEffect(() => {
     axios
       .get(`http://localhost:5000/job/${localStorage.getItem("email")}`)
@@ -53,16 +56,28 @@ const EmployerDashboard = () => {
         }}
       >
         <Nav.Item>
-          <Nav.Link href="/addjob">Publish new job</Nav.Link>
+          <Nav.Link as={Link} to="/addjob">
+            Publish a new job
+          </Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link onClick={() => setOpenPosts((prev) => !prev)}>
+          <Nav.Link
+            onClick={() => {
+              setOpenGraphs(false);
+              setOpenPosts((prev) => !prev);
+            }}
+          >
             {!openPosts ? "manage applications" : "close list of application"}
           </Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link eventKey="disabled" disabled>
-            Disabled
+          <Nav.Link
+            onClick={() => {
+              setOpenPosts(false);
+              setOpenGraphs((prev) => !prev);
+            }}
+          >
+            Data Analytics
           </Nav.Link>
         </Nav.Item>
       </Nav>
@@ -96,6 +111,7 @@ const EmployerDashboard = () => {
             </MDBCol>
           ))}
       </MDBRow>
+      {openGraphs && <EmployerGraphs />}
     </div>
   );
 };
