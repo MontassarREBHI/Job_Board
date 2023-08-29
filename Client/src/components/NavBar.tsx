@@ -2,14 +2,12 @@ import { Container, Navbar, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { signOut } from "firebase/auth";
 import { auth } from "../config/firebaseConfig";
-
-import { useState, useEffect } from "react";
+import { userContext } from "../contexts/ContextProvider";
+import { useState, useEffect, useContext } from "react";
 // import profileLogo from "./path-to-profile-logo.png"; // Import your profile logo image
 
 function NavBar(): JSX.Element {
-  const [loggedIn, setLoggedIn] = useState<string>(
-    sessionStorage.getItem("loggedIn") || ""
-  );
+  const { loggedIn, setLoggedIn } = useContext(userContext);
 
   const logOut = () => {
     return loggedIn === "false"

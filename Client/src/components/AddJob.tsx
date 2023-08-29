@@ -1,5 +1,6 @@
 import { Button, FloatingLabel, Form } from "react-bootstrap";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const AddJob = () => {
@@ -10,6 +11,7 @@ const AddJob = () => {
     companyDesc: "",
     employerEmail: localStorage.getItem("email"),
   });
+
   const submitOffer = () => {
     if (Object.values(newJob).every((value) => value !== "")) {
       axios
@@ -17,6 +19,7 @@ const AddJob = () => {
         .then(() => alert("Job added successfully!"));
     } else alert("you need to fill all the fields!");
   };
+  const navigate = useNavigate();
 
   return (
     <div style={{ margin: "5%", height: "100%" }}>
