@@ -27,10 +27,18 @@ function App() {
           <Route path="/signin" element={<Signin />} />
           <Route path="/jobApply" element={<JobApply />} />
           <Route path="/Application" element={<Application />} />
-          <Route path="/Addjob" element={<AddJob />} />
           <Route path="/profile" element={<Profile />} />
-
           {/* route below accessible only for employers */}
+          <Route
+            path="/addjob"
+            element={
+              <ProtectedRoute
+                isAuthenticated={userInfo?.role === "employer"}
+                children={<AddJob />}
+              />
+            }
+          />
+
           <Route
             path="/dash"
             element={

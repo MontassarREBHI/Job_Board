@@ -23,6 +23,7 @@ const ContextProvider = ({ children }: React.PropsWithChildren<{}>) => {
     address: "",
     CV: "",
   });
+  const [loggedIn, setLoggedIn] = useState<string | null>("false");
   useEffect(() => {
     axios
       .get(`http://localhost:5000/user/${userInfo.email}`)
@@ -30,7 +31,9 @@ const ContextProvider = ({ children }: React.PropsWithChildren<{}>) => {
   }, []);
 
   return (
-    <userContext.Provider value={{ userInfo, setUserInfo }}>
+    <userContext.Provider
+      value={{ userInfo, setUserInfo, loggedIn, setLoggedIn }}
+    >
       {children}
     </userContext.Provider>
   );

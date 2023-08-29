@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { auth, provider } from "../config/firebaseConfig";
 import { Container, Form, Button, Col, Nav, Row } from "react-bootstrap";
 const Signin = () => {
-  const { setUserInfo } = useContext(userContext);
+  const { setUserInfo, setLoggedIn } = useContext(userContext);
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const navigate = useNavigate();
@@ -32,6 +32,7 @@ const Signin = () => {
             alert(`signed in successfully ${user}`);
             sessionStorage.setItem("loggedIn", "true");
             //navigate based on the user role (applicant or employer)
+            setLoggedIn("true");
             res.data.user.role === "applicant"
               ? navigate("/home")
               : navigate("/dash");
@@ -60,6 +61,7 @@ const Signin = () => {
             setUserInfo(res.data.user);
             alert("signed in successfully ");
             sessionStorage.setItem("loggedIn", "true");
+            setLoggedIn("true");
             res.data.user?.role === "applicant"
               ? navigate("/home")
               : navigate("/dash");
