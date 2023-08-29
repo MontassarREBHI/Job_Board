@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "react-bootstrap";
+import { Nav } from "react-bootstrap";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import {
@@ -34,7 +34,7 @@ const EmployerDashboard = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [jobList, setJobList] = useState<jobListType[]>([]);
-
+  const [openPosts, setOpenPosts] = useState<boolean>(false);
   useEffect(() => {
     axios
       .get(`http://localhost:5000/job/${localStorage.getItem("email")}`)
@@ -43,37 +43,58 @@ const EmployerDashboard = () => {
 
   return (
     <div>
-      <h1 style={{ textAlign: "center" }}>
-        {" "}
-        here are your Published job offers
-      </h1>
+      <Nav
+        variant="tabs"
+        defaultActiveKey="/home"
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          display: "flex",
+        }}
+      >
+        <Nav.Item>
+          <Nav.Link href="/addjob">Publish new job</Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link onClick={() => setOpenPosts((prev) => !prev)}>
+            {!openPosts ? "manage applications" : "close list of application"}
+          </Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link eventKey="disabled" disabled>
+            Disabled
+          </Nav.Link>
+        </Nav.Item>
+      </Nav>
+
       <MDBRow style={{ margin: "2%" }}>
-        {jobList.map((job) => (
-          <MDBCol md="4" key={job._id}>
-            <MDBCard alignment="center">
-              <MDBCardHeader>{job.title}</MDBCardHeader>
-              <MDBCardBody>
-                {/* <MDBCardTitle></MDBCardTitle> */}
-                <MDBCardText>
-                  {job.requirement
-                    .split(" ")
-                    .filter((e, i) => i < 6)
-                    .join(" ")}
-                  ...
-                </MDBCardText>
-                <MDBBtn
-                  onClick={() => {
-                    dispatch(selectOffer(job));
-                    navigate("/applications");
-                  }}
-                >
-                  Applications to this post
-                </MDBBtn>
-              </MDBCardBody>
-              <MDBCardFooter>{"number of applicants"}</MDBCardFooter>
-            </MDBCard>
-          </MDBCol>
-        ))}
+        {openPosts &&
+          jobList.map((job) => (
+            <MDBCol md="4" key={job._id}>
+              <MDBCard alignment="center">
+                <MDBCardHeader>{job.title}</MDBCardHeader>
+                <MDBCardBody>
+                  {/* <MDBCardTitle></MDBCardTitle> */}
+                  <MDBCardText>
+                    {job.requirement
+                      .split(" ")
+                      .filter((e, i) => i < 6)
+                      .join(" ")}
+                    ...
+                  </MDBCardText>
+                  <MDBBtn
+                    onClick={() => {
+                      dispatch(selectOffer(job));
+                      navigate("/applications");
+                    }}
+                  >
+                    Applications to this post
+                  </MDBBtn>
+                </MDBCardBody>
+                <MDBCardFooter>{"number of applicants"}</MDBCardFooter>
+              </MDBCard>
+            </MDBCol>
+          ))}
       </MDBRow>
     </div>
   );
