@@ -14,6 +14,7 @@ import Profile from "./components/Profile";
 import EmployerDashboard from "./components/EmployerDashboard";
 import JobApplications from "./components/JobApplications";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Footer from "./components/Footer";
 
 function App() {
   const { userInfo } = useContext(userContext);
@@ -26,7 +27,15 @@ function App() {
           <Route path="/" element={<Register />} />
           <Route path="/signin" element={<Signin />} />
           <Route path="/jobApply" element={<JobApply />} />
-          <Route path="/Application" element={<Application />} />
+          <Route
+            path="/Application"
+            element={
+              <ProtectedRoute
+                isAuthenticated={userInfo?.role === "applicant"}
+                children={<Application />}
+              />
+            }
+          />
           <Route path="/profile" element={<Profile />} />
           {/* route below accessible only for employers */}
           <Route
@@ -50,6 +59,7 @@ function App() {
           />
           <Route path="/applications" element={<JobApplications />} />
         </Routes>
+        <Footer />
       </Router>
     </>
   );
