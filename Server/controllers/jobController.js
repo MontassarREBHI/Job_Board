@@ -76,13 +76,37 @@ const getListByEmployer = async (req, res) => {
     ? res.status(200).json({ listOfJobs, message: "here is the list!" })
     : res.status(400).send("no job found");
 };
+
+const getListByApplicant = async (req, res) => {
+  const { email } = req.params;
+  const listOfApplications = await Application.find({ email }).lean();
+  if (listOfApplications.length) {
+    const result = await Promise.all(
+      listOfApplications.map(async (e) => {
+        const job = await Job.findOne({ _id: e.jobID }).lean();
+
+        const newApplication = {
+          ...e,
+          jobTitle: job.title,
+          companyDesc: job.companyDesc,
+          employerEmail: job.employerEmail,
+        };
+
+        return newApplication;
+      })
+    );
+
+    res.status(200).json({ result, message: "here is the list!" });
+  } else res.status(400).send("no application found or something went wrong!");
+};
+
 // get application by post
 const getApplicationByPost = async (req, res) => {
   const { id } = req.params;
   const applicationToThisJob = await Application.find({
     jobID: id,
   });
- 
+
   applicationToThisJob.length > 0
     ? res.status(200).json({
         applicationToThisJob,
@@ -97,5 +121,6 @@ module.exports = {
   fileUpload,
   jobApply,
   getListByEmployer,
+  getListByApplicant,
   getApplicationByPost,
 };

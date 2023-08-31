@@ -39,5 +39,18 @@
 .job-requirement {
   margin-top: 10px;
   line-height: 1.6;
+} /* Add this to your CSS */
+
+body {
+  display: flex;
+  flex-direction: column;
 }
 
+#root {
+  flex: 1;
+}
+
+/* Style the footer */
+footer {
+  flex-shrink: 0;
+}
