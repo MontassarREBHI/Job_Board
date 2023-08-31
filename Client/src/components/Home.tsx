@@ -26,7 +26,7 @@ const Home = () => {
   const [search, setSearch] = useState<boolean>(false);
   const [keyWord, setKeyWord] = useState<string>("");
   const [filteredData, setFilteredData] = useState<jobType[]>(data);
-  const [display,setDisplay]=useState<number>(5)
+  const [display, setDisplay] = useState<number>(5);
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
@@ -86,35 +86,37 @@ const Home = () => {
         </>
       )}
       <Row>
-        {filteredData.filter((e,i)=>i<display).map((job: jobType) => (
-          <Col key={job._id} xs={3}>
-            <Card style={{ marginBottom: "3%" }}>
-              <Card.Img variant="top" src="holder.js/100px180" />
-              <Card.Body>
-                <Card.Title>{job.title}</Card.Title>
-                <Card.Text>
-                  {job.description
-                    .split(" ")
-                    .filter((e, i) => i <= 6)
-                    .join(" ")}
-                  ...
-                </Card.Text>
-                <Button
-                  variant="primary"
-                  onClick={() => {
-                    dispatch(selectOffer(job));
+        {filteredData
+          .filter((e, i) => i < display)
+          .map((job: jobType) => (
+            <Col key={job._id} xs={3}>
+              <Card style={{ marginBottom: "3%" }}>
+                <Card.Img variant="top" src="holder.js/100px180" />
+                <Card.Body>
+                  <Card.Title>{job.title}</Card.Title>
+                  <Card.Text>
+                    {job.description
+                      .split(" ")
+                      .filter((e, i) => i <= 6)
+                      .join(" ")}
+                    ...
+                  </Card.Text>
+                  <Button
+                    variant="primary"
+                    onClick={() => {
+                      dispatch(selectOffer(job));
 
-                    navigate("/jobApply");
-                  }}
-                >
-                  Apply
-                </Button>
-              </Card.Body>
-            </Card>
-          </Col>
-        ))}
+                      navigate("/jobApply");
+                    }}
+                  >
+                    See more and apply
+                  </Button>
+                </Card.Body>
+              </Card>
+            </Col>
+          ))}
       </Row>
-      <Button onClick={()=>setDisplay(prev=>prev+5)}>see more</Button>
+      <Button onClick={() => setDisplay((prev) => prev + 5)}>see more</Button>
     </div>
   );
 };
