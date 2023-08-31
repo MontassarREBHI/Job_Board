@@ -7,6 +7,7 @@ const applicationSchema = new mongoose.Schema({
   country: String,
   phoneNumber: Number,
   CV: String,
+  applyDate:String,
   status: { type: String, default: 'pending' }
 });
 
