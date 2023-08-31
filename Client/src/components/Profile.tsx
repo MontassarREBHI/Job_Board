@@ -21,6 +21,15 @@ import { Form } from "react-bootstrap";
 
 export default function Profile() {
   const { userInfo, setUserInfo } = useContext(userContext);
+  const [x, y] = useState([]);
+  useEffect(() => {
+    axios
+      .get(`http://localhost:5000/job/apps/${localStorage.getItem("email")}`)
+      .then((res) => {
+        y(res.data.result);
+        console.log(x);
+      });
+  }, []);
 
   const updateInfo = () => {
     axios
@@ -160,35 +169,21 @@ export default function Profile() {
             </MDBCard>
 
             <MDBRow>
-              <MDBCol md="6">
-                <MDBCard alignment="center">
-                  <MDBCardHeader>Featured</MDBCardHeader>
-                  <MDBCardBody>
-                    <MDBCardTitle>Special title treatment</MDBCardTitle>
-                    <MDBCardText>
-                      With supporting text below as a natural lead-in to
-                      additional content.
-                    </MDBCardText>
-                    <MDBBtn href="#">Go somewhere</MDBBtn>
-                  </MDBCardBody>
-                  <MDBCardFooter>2 days ago</MDBCardFooter>
-                </MDBCard>
-              </MDBCol>
-
-              <MDBCol md="6">
-                <MDBCard alignment="center">
-                  <MDBCardHeader>Featured</MDBCardHeader>
-                  <MDBCardBody>
-                    <MDBCardTitle>Special title treatment</MDBCardTitle>
-                    <MDBCardText>
-                      With supporting text below as a natural lead-in to
-                      additional content.
-                    </MDBCardText>
-                    <MDBBtn href="#">Go somewhere</MDBBtn>
-                  </MDBCardBody>
-                  <MDBCardFooter>2 days ago</MDBCardFooter>
-                </MDBCard>
-              </MDBCol>
+              {x?.map((app) => (
+                <MDBCol md="6" key={app._id}>
+                  <MDBCard alignment="center">
+                    <MDBCardHeader>
+                      Application Status: {app.status}
+                    </MDBCardHeader>
+                    <MDBCardBody>
+                      <MDBCardTitle>{app.jobTitle}</MDBCardTitle>
+                      <MDBCardText>{app.companyDesc}</MDBCardText>
+                      <MDBBtn href="#">Go somewhere</MDBBtn>
+                    </MDBCardBody>
+                    <MDBCardFooter>2 days ago</MDBCardFooter>
+                  </MDBCard>
+                </MDBCol>
+              ))}
             </MDBRow>
           </MDBCol>
         </MDBRow>

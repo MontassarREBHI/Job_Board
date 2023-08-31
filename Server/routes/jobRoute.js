@@ -5,6 +5,7 @@ const applicationController = require("../controllers/applicationController");
 router.route("/").post(jobController.addJob).get(jobController.jobList);
 router.post("/cvs", jobController.fileUpload, jobController.jobApply);
 router.get("/:email", jobController.getListByEmployer);
+router.get("/apps/:email", jobController.getListByApplicant);
 router.get("/applications/:id", jobController.getApplicationByPost);
-router.put("/",applicationController.manageApplication)
+router.put("/", applicationController.manageApplication);
 module.exports = router;
