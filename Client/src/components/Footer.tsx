@@ -131,9 +131,9 @@ const Footer = () => {
           className="w-full p-4 text-center"
           style={{ backgroundColor: "rgba(0, 0, 0, 0.2)" }}
         >
-          © 2023 Copyright:
-          <a className="text-white" href="https://tailwind-elements.com/">
-            Job Board web site
+          © 2023 Copyright :
+          <a className="text-white" href="/">
+            &nbsp;Job Board web site
           </a>
         </div>
       </footer>
