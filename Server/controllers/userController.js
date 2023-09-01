@@ -2,12 +2,23 @@ const mongoose = require("mongoose");
 const User = require("../models/users");
 
 const addUser = async (req, res) => {
-  const { name, email, phone, address, CV, role } = req.body;
+  const { name, email, phone, address, CV, role, linkedIn, title } = req.body;
   const existingUser = await User.findOne({ email });
   if (existingUser)
-    return res.status(200).json({existingUser, message: "User already exist" });
+    return res
+      .status(200)
+      .json({ existingUser, message: "User already exist" });
   try {
-    const user = new User({ name, email, phone, address, CV, role });
+    const user = new User({
+      name,
+      email,
+      phone,
+      address,
+      CV,
+      role,
+      title,
+      linkedIn,
+    });
     await user.save();
 
     res.status(200).json({ user, message: "User created successfully" });
@@ -24,10 +35,10 @@ const getUserByEmail = async (req, res) => {
 };
 
 const updateUserProfile = async (req, res) => {
-  const { name, email, phone, address, CV, role } = req.body;
+  const { name, email, phone, address, CV, role, title, linkedIn } = req.body;
   const user = await User.findOneAndUpdate(
     { email },
-    { name, phone, address, CV, role },
+    { name, phone, address, CV, role, title, linkedIn },
     { new: true }
   );
   user

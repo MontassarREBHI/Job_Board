@@ -8,6 +8,8 @@ type UserType = {
   phone: string;
   role: string;
   address: string;
+  title: string;
+  linkedIn: string;
   CV: string;
   // Add other properties as needed
 };
@@ -21,6 +23,8 @@ const ContextProvider = ({ children }: React.PropsWithChildren<{}>) => {
     phone: "",
     role: "",
     address: "",
+    title: "",
+    linkedIn: "",
     CV: "",
   });
   const [loggedIn, setLoggedIn] = useState<string | null>(

@@ -1,6 +1,6 @@
 import { useState, useContext, useEffect } from "react";
 import { userContext } from "../contexts/ContextProvider";
-import { Button } from "react-bootstrap";
+import { Button, Col, Row } from "react-bootstrap";
 import {
   MDBCol,
   MDBInput,
@@ -13,7 +13,6 @@ import {
   MDBCardHeader,
   MDBCardTitle,
   MDBCardFooter,
-  MDBBtn,
   MDBListGroup,
   MDBListGroupItem,
 } from "mdb-react-ui-kit";
@@ -50,16 +49,39 @@ export default function Profile() {
         <MDBRow>
           <MDBCol lg="4">
             <MDBCard className="mb-4">
-              <MDBCardBody className="text-center">
-                <MDBCardImage
-                  src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
-                  alt="avatar"
-                  className="rounded-circle"
-                  style={{ width: "150px" }}
-                  fluid
+              <MDBCardBody className="text-center  ">
+                <Row>
+                  <Col
+                    xs={12}
+                    style={{
+                      justifyContent: "center",
+                    }}
+                  >
+                    <MDBCardImage
+                      src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+                      alt="avatar"
+                      className="rounded-circle"
+                      style={{
+                        width: "150px",
+                        marginLeft: "25%",
+                        marginBottom: "2%",
+                      }}
+                      fluid
+                    />
+                  </Col>
+                </Row>
+
+                <MDBInput
+                  id="typeTitle"
+                  type="text"
+                  placeholder="Your title here"
+                  value={userInfo?.title}
+                  onChange={(e) =>
+                    setUserInfo((prev) => {
+                      return { ...prev, title: e.target.value };
+                    })
+                  }
                 />
-                <p className="text-muted mb-1">Full stack JS developer</p>
-                <p className="text-muted mb-4">Bay Area, San Francisco, CA</p>
               </MDBCardBody>
             </MDBCard>
 
@@ -69,20 +91,19 @@ export default function Profile() {
                   <MDBListGroupItem className="d-flex justify-content-between align-items-center p-2">
                     <MDBRow>
                       <MDBCol sm="4">
-                        <MDBCardText>Github</MDBCardText>
-                      </MDBCol>
-                      <MDBCol sm="8">
-                        <MDBInput id="typeURL" type="url" />
-                      </MDBCol>
-                    </MDBRow>
-                  </MDBListGroupItem>
-                  <MDBListGroupItem className="d-flex justify-content-between align-items-center p-2">
-                    <MDBRow>
-                      <MDBCol sm="4">
                         <MDBCardText>LinkedIn</MDBCardText>
                       </MDBCol>
                       <MDBCol sm="8">
-                        <MDBInput id="typeURL" type="url" />
+                        <MDBInput
+                          value={userInfo?.linkedIn}
+                          type="text"
+                          placeholder="Profile URL"
+                          onChange={(e) =>
+                            setUserInfo((prev) => {
+                              return { ...prev, linkedIn: e.target.value };
+                            })
+                          }
+                        />
                       </MDBCol>
                     </MDBRow>
                   </MDBListGroupItem>

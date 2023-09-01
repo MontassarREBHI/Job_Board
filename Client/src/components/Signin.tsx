@@ -158,9 +158,9 @@ const Signin = () => {
               </Col>
             </Row>
             <div className="mt-3 text-center">
-              Already have an account?{" "}
-              <Link style={{ color: "blue", fontWeight: "bold" }} to="/signin">
-                Sign in
+              Don't have an account?{" "}
+              <Link style={{ color: "blue", fontWeight: "bold" }} to="/">
+                Sign up
               </Link>
             </div>
           </Form>
