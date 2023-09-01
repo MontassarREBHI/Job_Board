@@ -1,5 +1,6 @@
 import { useState, useContext, useEffect } from "react";
 import { userContext } from "../contexts/ContextProvider";
+import { Button } from "react-bootstrap";
 import {
   MDBCol,
   MDBInput,
@@ -21,13 +22,12 @@ import { Form } from "react-bootstrap";
 
 export default function Profile() {
   const { userInfo, setUserInfo } = useContext(userContext);
-  const [x, y] = useState([]);
+  const [apps, setApps] = useState([]);
   useEffect(() => {
     axios
       .get(`http://localhost:5000/job/apps/${localStorage.getItem("email")}`)
       .then((res) => {
-        y(res.data.result);
-        console.log(x);
+        setApps(res.data.result.reverse());
       });
   }, []);
 
@@ -40,7 +40,10 @@ export default function Profile() {
       })
       .catch((err) => alert(err.message));
   };
-
+  const contactEmployer = (email) => {
+    const mailtoLink = `mailto:${email}`;
+    window.location.href = mailtoLink;
+  };
   return (
     <section style={{ backgroundColor: "#eee" }}>
       <MDBContainer className="py-5">
@@ -90,9 +93,9 @@ export default function Profile() {
               className="d-grid gap-2 col-6 mx-auto"
               style={{ marginTop: "5%" }}
             >
-              <MDBBtn color="success" onClick={updateInfo}>
+              <Button variant="success" onClick={updateInfo}>
                 Save changes
-              </MDBBtn>
+              </Button>
             </div>
           </MDBCol>
           <MDBCol lg="8">
@@ -169,21 +172,53 @@ export default function Profile() {
             </MDBCard>
 
             <MDBRow>
-              {x?.map((app) => (
-                <MDBCol md="6" key={app._id}>
-                  <MDBCard alignment="center">
-                    <MDBCardHeader>
-                      Application Status: {app.status}
-                    </MDBCardHeader>
-                    <MDBCardBody>
-                      <MDBCardTitle>{app.jobTitle}</MDBCardTitle>
-                      <MDBCardText>{app.companyDesc}</MDBCardText>
-                      <MDBBtn href="#">Go somewhere</MDBBtn>
-                    </MDBCardBody>
-                    <MDBCardFooter>2 days ago</MDBCardFooter>
-                  </MDBCard>
-                </MDBCol>
-              ))}
+              {userInfo.role === "applicant" && (
+                <h3
+                  style={{
+                    textAlign: "center",
+                    fontSize: "24px",
+                    fontWeight: "bold",
+                    color: "#333",
+                    marginBottom: "20px",
+                  }}
+                >
+                  <i
+                    className="fas fa-clock"
+                    style={{ marginRight: "10px" }}
+                  ></i>{" "}
+                  Recent applications{" "}
+                </h3>
+              )}
+              {userInfo.role === "applicant" &&
+                apps
+                  .filter((e, i) => i < 2)
+                  ?.map((app) => (
+                    <MDBCol md="6" key={app._id}>
+                      <MDBCard alignment="center">
+                        <MDBCardHeader>
+                          Application Status:{" "}
+                          <span style={{ color: "green" }}>{app.status}</span>
+                        </MDBCardHeader>
+                        <MDBCardBody>
+                          <MDBCardTitle>{app.jobTitle}</MDBCardTitle>
+                          <MDBCardText>{app.companyDesc}</MDBCardText>
+                          <Button
+                            onClick={() => contactEmployer(app.employerEmail)}
+                          >
+                            Contact the employer
+                          </Button>
+                        </MDBCardBody>
+                        <MDBCardFooter>
+                          {(
+                            (new Date().getTime() -
+                              new Date(app.applyDate).getTime()) /
+                            (1000 * 60 * 60 * 24)
+                          ).toFixed(0)}{" "}
+                          days ago
+                        </MDBCardFooter>
+                      </MDBCard>
+                    </MDBCol>
+                  ))}
             </MDBRow>
           </MDBCol>
         </MDBRow>
