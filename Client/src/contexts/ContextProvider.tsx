@@ -23,7 +23,9 @@ const ContextProvider = ({ children }: React.PropsWithChildren<{}>) => {
     address: "",
     CV: "",
   });
-  const [loggedIn, setLoggedIn] = useState<string | null>("false");
+  const [loggedIn, setLoggedIn] = useState<string | null>(
+    sessionStorage.getItem("loggedIn") || ""
+  );
   useEffect(() => {
     axios
       .get(`http://localhost:5000/user/${userInfo.email}`)

@@ -4,7 +4,7 @@ const Footer = () => {
       className="flex flex-col items-center text-center text-white"
       style={{
         backgroundColor: "#0a4275",
-        marginTop: "auto",
+        marginTop: "5%",
         flexShrink: 0,
       }}
     >
