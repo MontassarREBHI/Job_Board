@@ -24,7 +24,7 @@ const JobApply = () => {
           }}
         >
           <Alert.Heading>warning</Alert.Heading>
-          <p>refreshing this page will route you to the home page</p>
+          <p>refreshing will route you to the home page</p>
         </Alert>
 
         <Row>

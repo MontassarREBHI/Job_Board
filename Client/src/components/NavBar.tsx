@@ -34,11 +34,7 @@ function NavBar(): JSX.Element {
           </Nav.Link>
           <Nav.Link>
             <Link to="/signin" onClick={logOut}>
-              Sign{" "}
-              {loggedIn === "true" ||
-              sessionStorage.getItem("loggedIn") === "true"
-                ? "out"
-                : "in"}
+              Sign {loggedIn === "true" ? "out" : "in"}
             </Link>
           </Nav.Link>
         </Nav>
