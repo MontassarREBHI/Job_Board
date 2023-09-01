@@ -1,5 +1,6 @@
 import { Container, Navbar, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import profilePic from "../assets/icons8-customer-40.png";
 import { signOut } from "firebase/auth";
 import { auth } from "../config/firebaseConfig";
 import { userContext } from "../contexts/ContextProvider";
@@ -29,9 +30,11 @@ function NavBar(): JSX.Element {
           <Link to="/home">Home</Link>
         </Navbar.Brand>
         <Nav className="me-auto">
-          <Nav.Link>
-            <Link to="/">Sign up</Link>
-          </Nav.Link>
+          {loggedIn === "false" && (
+            <Nav.Link>
+              <Link to="/">Sign up</Link>
+            </Nav.Link>
+          )}
           <Nav.Link>
             <Link to="/signin" onClick={logOut}>
               Sign {loggedIn === "true" ? "out" : "in"}
@@ -42,7 +45,7 @@ function NavBar(): JSX.Element {
           <Nav.Link>
             <Link to="/profile">
               <img
-                src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" // Use the imported profile logo image source
+                src={profilePic} // Use the imported profile logo image source
                 alt="Profile Logo"
                 style={{ width: "30px", height: "30px", borderRadius: "50%" }}
               />

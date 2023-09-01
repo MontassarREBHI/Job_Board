@@ -4,6 +4,7 @@ import {
   Col,
   Card,
   Button,
+  Alert,
   FloatingLabel,
   Form,
 } from "react-bootstrap";
@@ -11,8 +12,8 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { selectOffer } from "../features/job/jobSlice.js";
-import { useState, useEffect } from "react";
-
+import { useState, useEffect, useContext } from "react";
+import { userContext } from "../contexts/ContextProvider.js";
 interface jobType {
   _id: string;
   title: string;
@@ -27,8 +28,9 @@ const Home = () => {
   const [keyWord, setKeyWord] = useState<string>("");
   const [filteredData, setFilteredData] = useState<jobType[]>(data);
   const [display, setDisplay] = useState<number>(5);
+  const [showAlert, setShowAlert] = useState(false);
   const navigate = useNavigate();
-
+  const { userInfo } = useContext(userContext);
   const dispatch = useDispatch();
   useEffect(() => {
     axios
@@ -40,6 +42,11 @@ const Home = () => {
       .catch((err) => {
         console.log(err.message);
       });
+  }, []);
+  useEffect(() => {
+    !Object.values(userInfo).every((e) => e !== "")
+      ? setShowAlert(true)
+      : setShowAlert(false);
   }, []);
   useEffect(() => {
     if (!keyWord) {
@@ -54,6 +61,15 @@ const Home = () => {
 
   return (
     <div>
+      {showAlert && (
+        <Alert variant="warning" dismissible>
+          <Alert.Heading>Complete your profile</Alert.Heading>
+          <p>
+            Completing your profile details will increase your visibilty to the
+            employers
+          </p>
+        </Alert>
+      )}
       <Container
         style={{
           display: "flex",

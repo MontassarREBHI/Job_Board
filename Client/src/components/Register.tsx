@@ -36,6 +36,8 @@ const Register: React.FC = () => {
                 address: null,
                 CV: null,
                 name: null,
+                title: null,
+                linkedIn: null,
               })
               .then(async () => {
                 setSignUpAlert(true);
@@ -68,6 +70,8 @@ const Register: React.FC = () => {
           address: null,
           CV: null,
           name: null,
+          title: null,
+          linkedIn: null,
         })
         .then(() => {
           // console.log(res.data.user);

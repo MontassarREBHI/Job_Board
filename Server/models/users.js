@@ -31,6 +31,15 @@ const userSchema = new Schema({
     type: String,
     required: false,
   },
+  linkedIn: {
+    type: String,
+    required: false,
+    unique: true,
+  },
+  title: {
+    type: String,
+    required: false,
+  },
 });
 
 module.exports = mongoose.model("User", userSchema);
