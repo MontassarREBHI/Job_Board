@@ -19,7 +19,7 @@ function NavBar(): JSX.Element {
             setLoggedIn("false");
           })
           .catch((error) => {
-            // An error happened.
+            console.log(error);
           });
   };
   return (
