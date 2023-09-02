@@ -2,7 +2,8 @@ import { RootState } from "../app/store.js";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { Table, Form, Button, Row, Col, Alert } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import { Table, Form, Button, Row, Col, Alert, Nav } from "react-bootstrap";
 
 export default function JobApplications() {
   const [applications, setApplicantions] = useState([]);
@@ -27,11 +28,19 @@ export default function JobApplications() {
   };
   return (
     <div style={{ margin: "4%" }}>
+      <Nav.Link
+        as={Link}
+        to="/dash"
+        style={{ marginBottom: "2%", color: "blue" }}
+      >
+        Back to Dashboard ↺
+      </Nav.Link>
       {alert && (
         <Alert variant="success" onClose={() => setAlert(false)} dismissible>
           status updated, applicant will be notified via email
         </Alert>
       )}
+
       <h2 style={{ textAlign: "center", marginBottom: "2%" }}>
         List of applicants to the post of {job.title}
       </h2>
@@ -74,6 +83,7 @@ export default function JobApplications() {
                         <Form.Select
                           aria-label="Default select example"
                           onChange={(e) => setNewStatus(e.target.value)}
+                          defaultValue={application.status}
                         >
                           <option value="pending">pending</option>
                           <option value="rejected">rejected</option>

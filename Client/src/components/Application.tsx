@@ -1,4 +1,4 @@
-import { Button, Container, Form } from "react-bootstrap";
+import { Button, Container, Form, ProgressBar } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { RootState } from "../app/store.js";
 import { useState } from "react";
@@ -9,8 +9,8 @@ const Application = () => {
     email: "",
     fullName: "",
     country: "",
-    phoneNumber: 0,
-    CV: null,
+    phoneNumber: "",
+    CV: "",
   });
   const [filePath, setFilePath] = useState<string>("");
   const job = useSelector((state: RootState) => state.job.value);
@@ -44,10 +44,25 @@ const Application = () => {
       console.error("Error:", error?.message);
     }
   };
-
+  const now = Object.values(application).filter((e) => e !== "").length * 20;
   return (
     <Container style={{ marginTop: "5%" }}>
-      <h1> Apply for : {job.title} </h1>
+      <h1
+        style={{ fontFamily: "serif", marginBottom: "2%", textAlign: "center" }}
+      >
+        Application form
+      </h1>
+      <ProgressBar
+        now={now}
+        label={`${now}%`}
+        variant={now < 100 ? "warning" : "success"}
+        style={{ marginBottom: "2%" }}
+      />
+      <h3 style={{ fontFamily: "serif", marginBottom: "2%" }}>
+        {" "}
+        Apply for {job.title} position
+      </h3>
+
       <Form encType="multipart/form-data">
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
