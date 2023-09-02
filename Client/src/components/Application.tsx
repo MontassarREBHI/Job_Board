@@ -56,6 +56,7 @@ const Application = () => {
         now={now}
         label={`${now}%`}
         variant={now < 100 ? "warning" : "success"}
+        animated
         style={{ marginBottom: "2%" }}
       />
       <h3 style={{ fontFamily: "serif", marginBottom: "2%" }}>

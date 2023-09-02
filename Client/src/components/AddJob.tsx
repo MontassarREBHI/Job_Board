@@ -28,6 +28,7 @@ const AddJob = () => {
         now={now}
         label={`${now}%`}
         variant={now < 100 ? "warning" : "success"}
+        animated
         style={{ marginBottom: "2%" }}
       />
 

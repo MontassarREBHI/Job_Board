@@ -30,7 +30,7 @@ function NavBar(): JSX.Element {
       <Container>
         <Navbar.Brand>
           <Link to={userInfo.role === "applicant" ? "/home" : "/dash"}>
-            {userInfo.role === "employer" ? "Employer Dashboard" : "Home"}
+            {userInfo.role === "employer" ? "Dashboard" : "Home"}
           </Link>
         </Navbar.Brand>
         <Nav className="me-auto">

@@ -15,6 +15,7 @@ import EmployerDashboard from "./components/EmployerDashboard";
 import JobApplications from "./components/JobApplications";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Footer from "./components/Footer";
+import ExploreProfiles from "./components/ExploreProfiles";
 
 function App() {
   const { userInfo } = useContext(userContext);
@@ -27,6 +28,8 @@ function App() {
           <Route path="/" element={<Register />} />
           <Route path="/signin" element={<Signin />} />
           <Route path="/jobApply" element={<JobApply />} />
+          <Route path="/explore" element={<ExploreProfiles />} />
+
           <Route
             path="/Application"
             element={
