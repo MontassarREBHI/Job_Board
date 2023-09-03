@@ -18,14 +18,22 @@ import Footer from "./components/Footer";
 import ExploreProfiles from "./components/ExploreProfiles";
 
 function App() {
-  const { userInfo } = useContext(userContext);
+  const { userInfo, loggedIn } = useContext(userContext);
   return (
     <>
       <Router>
         <NavBar />
         <Routes>
-          <Route path="/home" element={<Home />} />
-          <Route path="/" element={<Register />} />
+          <Route
+            path="/"
+            element={
+              <ProtectedRoute
+                isAuthenticated={userInfo?.role !== "employer"}
+                children={<Home />}
+              />
+            }
+          />
+          <Route path="/register" element={<Register />} />
           <Route path="/signin" element={<Signin />} />
           <Route path="/jobApply" element={<JobApply />} />
           <Route path="/explore" element={<ExploreProfiles />} />
@@ -39,7 +47,16 @@ function App() {
               />
             }
           />
-          <Route path="/profile" element={<Profile />} />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute
+                isAuthenticated={loggedIn === "true"}
+                children={<Profile />}
+              />
+            }
+          />
+
           {/* route below accessible only for employers */}
           <Route
             path="/addjob"
