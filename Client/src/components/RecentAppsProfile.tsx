@@ -12,7 +12,7 @@ import {
 function RecentAppsProfile({ userInfo, apps, contactEmployer }) {
   return (
     <MDBRow>
-      {userInfo.role === "applicant" && (
+      {userInfo?.role === "applicant" && (
         <h3
           style={{
             textAlign: "center",
@@ -26,7 +26,7 @@ function RecentAppsProfile({ userInfo, apps, contactEmployer }) {
           Recent applications{" "}
         </h3>
       )}
-      {userInfo.role === "applicant" &&
+      {userInfo?.role === "applicant" &&
         apps
           .filter((e, i) => i < 2)
           ?.map((app) => (

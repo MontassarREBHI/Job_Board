@@ -34,7 +34,7 @@ const Signin = () => {
             //navigate based on the user role (applicant or employer)
             setLoggedIn("true");
             res.data.user.role === "applicant"
-              ? navigate("/home")
+              ? navigate("/")
               : navigate("/dash");
           });
       })
@@ -63,7 +63,7 @@ const Signin = () => {
             sessionStorage.setItem("loggedIn", "true");
             setLoggedIn("true");
             res.data.user?.role === "applicant"
-              ? navigate("/home")
+              ? navigate("/")
               : navigate("/dash");
           });
       })
@@ -159,7 +159,10 @@ const Signin = () => {
             </Row>
             <div className="mt-3 text-center">
               Don't have an account?{" "}
-              <Link style={{ color: "blue", fontWeight: "bold" }} to="/">
+              <Link
+                style={{ color: "blue", fontWeight: "bold" }}
+                to="/register"
+              >
                 Sign up
               </Link>
             </div>

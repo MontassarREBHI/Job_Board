@@ -9,6 +9,8 @@ import {
   Form,
 } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { confirmAlert } from "react-confirm-alert"; // Import
+import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { selectOffer } from "../features/job/jobSlice.js";
@@ -27,10 +29,10 @@ const Home = () => {
   const [search, setSearch] = useState<boolean>(false);
   const [keyWord, setKeyWord] = useState<string>("");
   const [filteredData, setFilteredData] = useState<jobType[]>(data);
-  const [display, setDisplay] = useState<number>(5);
+  const [display, setDisplay] = useState<number>(8);
   const [showAlert, setShowAlert] = useState(false);
   const navigate = useNavigate();
-  const { userInfo } = useContext(userContext);
+  const { userInfo, loggedIn } = useContext(userContext);
   const dispatch = useDispatch();
   useEffect(() => {
     axios
@@ -44,9 +46,11 @@ const Home = () => {
       });
   }, []);
   useEffect(() => {
-    !Object.values(userInfo).every((e) => e !== "")
-      ? setShowAlert(true)
-      : setShowAlert(false);
+    loggedIn === "true"
+      ? !Object.values(userInfo).every((e) => e !== "")
+        ? setShowAlert(true)
+        : setShowAlert(false)
+      : null;
   }, []);
   useEffect(() => {
     if (!keyWord) {
@@ -59,6 +63,27 @@ const Home = () => {
     }
   }, [keyWord]);
 
+  const signInToApply = () => {
+    confirmAlert({
+      title: "Sign in to apply ! ",
+      message: "You will be directed to sign-in page",
+      buttons: [
+        {
+          label: "Go Sign in",
+          onClick: () => navigate("/signin"),
+        },
+        {
+          label: "Cancel",
+          onClick: () => {},
+        },
+      ],
+    });
+  };
+  const AlreadySingedIn = (selectedJob) => {
+    dispatch(selectOffer(selectedJob));
+
+    navigate("/jobApply");
+  };
   return (
     <div>
       {showAlert && (
@@ -119,11 +144,11 @@ const Home = () => {
                   </Card.Text>
                   <Button
                     variant="primary"
-                    onClick={() => {
-                      dispatch(selectOffer(job));
-
-                      navigate("/jobApply");
-                    }}
+                    onClick={
+                      loggedIn === "true"
+                        ? () => AlreadySingedIn(job)
+                        : signInToApply
+                    }
                   >
                     See more and apply
                   </Button>
