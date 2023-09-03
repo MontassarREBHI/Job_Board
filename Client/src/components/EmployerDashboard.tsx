@@ -1,5 +1,5 @@
 import React from "react";
-import { Nav } from "react-bootstrap";
+import { Button, Nav } from "react-bootstrap";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -10,9 +10,7 @@ import {
   MDBCardText,
   MDBCardBody,
   MDBCardHeader,
-  MDBCardTitle,
   MDBCardFooter,
-  MDBBtn,
 } from "mdb-react-ui-kit";
 import { useDispatch } from "react-redux";
 import { selectOffer } from "../features/job/jobSlice";
@@ -71,6 +69,9 @@ const EmployerDashboard = () => {
           </Nav.Link>
         </Nav.Item>
         <Nav.Item>
+          <Nav.Link onClick={() => {}}>Explore candidates</Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
           <Nav.Link
             onClick={() => {
               setOpenPosts(false);
@@ -97,14 +98,14 @@ const EmployerDashboard = () => {
                       .join(" ")}
                     ...
                   </MDBCardText>
-                  <MDBBtn
+                  <Button
                     onClick={() => {
                       dispatch(selectOffer(job));
                       navigate("/applications");
                     }}
                   >
                     Applications to this post
-                  </MDBBtn>
+                  </Button>
                 </MDBCardBody>
                 <MDBCardFooter>{"number of applicants"}</MDBCardFooter>
               </MDBCard>

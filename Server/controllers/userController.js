@@ -1,6 +1,13 @@
 const mongoose = require("mongoose");
 const User = require("../models/users");
 
+
+
+const getAllApplicants=async(req,res)=>{
+ const applicants=await User.find({role:'applicant'})
+ applicants.length?res.status(200).json({applicants,message:'here are all applicants!'}):
+ res.status(400).send('no registred applicants yet or something went wrong!')
+}
 const addUser = async (req, res) => {
   const { name, email, phone, address, CV, role, linkedIn, title } = req.body;
   const existingUser = await User.findOne({ email });
@@ -46,4 +53,4 @@ const updateUserProfile = async (req, res) => {
     : res.status(400).send("something wrong");
 };
 
-module.exports = { addUser, getUserByEmail, updateUserProfile };
+module.exports = { addUser, getUserByEmail, updateUserProfile,getAllApplicants };

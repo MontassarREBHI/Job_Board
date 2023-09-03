@@ -1,4 +1,4 @@
-import { Button, FloatingLabel, Form, Nav } from "react-bootstrap";
+import { Button, FloatingLabel, Form, Nav, ProgressBar } from "react-bootstrap";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -21,16 +21,17 @@ const AddJob = () => {
     } else alert("you need to fill all the fields!");
   };
   const navigate = useNavigate();
-
+  const now = Object.values(newJob).filter((e) => e !== "").length * 20;
   return (
     <div style={{ margin: "5%", height: "100%" }}>
-      <Nav.Link
-        as={Link}
-        to="/dash"
-        style={{ marginBottom: "2%", color: "blue" }}
-      >
-        Back to Dashboard ↺
-      </Nav.Link>
+      <ProgressBar
+        now={now}
+        label={`${now}%`}
+        variant={now < 100 ? "warning" : "success"}
+        animated
+        style={{ marginBottom: "2%" }}
+      />
+
       <FloatingLabel
         controlId="floatingTextarea"
         label="Company Description"

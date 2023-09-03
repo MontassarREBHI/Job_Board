@@ -8,7 +8,8 @@ import { useState, useEffect, useContext } from "react";
 // import profileLogo from "./path-to-profile-logo.png"; // Import your profile logo image
 
 function NavBar(): JSX.Element {
-  const { loggedIn, setLoggedIn } = useContext(userContext);
+  const { userInfo, loggedIn, setLoggedIn, setUserInfo } =
+    useContext(userContext);
 
   const logOut = () => {
     return loggedIn === "false"
@@ -18,6 +19,7 @@ function NavBar(): JSX.Element {
             localStorage.removeItem("email");
             sessionStorage.removeItem("loggedIn");
             setLoggedIn("false");
+            setUserInfo({ ...userInfo, role: "applicant" });
           })
           .catch((error) => {
             console.log(error);
@@ -27,7 +29,9 @@ function NavBar(): JSX.Element {
     <Navbar bg="primary" data-bs-theme="dark">
       <Container>
         <Navbar.Brand>
-          <Link to="/home">Home</Link>
+          <Link to={userInfo.role === "applicant" ? "/home" : "/dash"}>
+            {userInfo.role === "employer" ? "Dashboard" : "Home"}
+          </Link>
         </Navbar.Brand>
         <Nav className="me-auto">
           {loggedIn === "false" && (
