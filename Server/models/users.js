@@ -22,6 +22,11 @@ const userSchema = new Schema({
     required: false,
     unique: false,
   },
+  photo: {
+    type: String,
+    required: false,
+    unique: false,
+  },
   address: {
     type: String,
     required: false,
