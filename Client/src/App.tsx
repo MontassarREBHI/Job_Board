@@ -16,6 +16,7 @@ import JobApplications from "./components/JobApplications";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Footer from "./components/Footer";
 import ExploreProfiles from "./components/ExploreProfiles";
+import ScanningProfile from "./components/ScanningProfile";
 
 function App() {
   const { userInfo, loggedIn } = useContext(userContext);
@@ -37,7 +38,7 @@ function App() {
           <Route path="/signin" element={<Signin />} />
           <Route path="/jobApply" element={<JobApply />} />
           <Route path="/explore" element={<ExploreProfiles />} />
-
+          <Route path="/scan" element={<ScanningProfile />} />
           <Route
             path="/Application"
             element={
