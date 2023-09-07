@@ -43,10 +43,11 @@ const getUserByEmail = async (req, res) => {
 };
 
 const updateUserProfile = async (req, res) => {
-  const { name, email, phone, address, CV, role, title, linkedIn } = req.body;
+  const { name, email, phone, address, CV, role, title, linkedIn, photo } =
+    req.body;
   const user = await User.findOneAndUpdate(
     { email },
-    { name, phone, address, CV, role, title, linkedIn },
+    { name, phone, address, CV, role, title, linkedIn, photo },
     { new: true }
   );
   user

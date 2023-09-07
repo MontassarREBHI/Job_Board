@@ -8,4 +8,5 @@ export interface applicant {
   CV: string;
   linkedIn: string;
   title: string;
+  photo: string;
 }
