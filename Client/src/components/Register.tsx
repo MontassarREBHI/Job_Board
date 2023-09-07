@@ -35,6 +35,7 @@ const Register: React.FC = () => {
                 phone: null,
                 address: null,
                 CV: null,
+                photo: null,
                 name: null,
                 title: null,
                 linkedIn: null,
@@ -72,6 +73,7 @@ const Register: React.FC = () => {
           name: null,
           title: null,
           linkedIn: null,
+          photo: null,
         })
         .then(() => {
           // console.log(res.data.user);

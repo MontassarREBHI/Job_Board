@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 type UserType = {
   _id: string;
+  photo: string;
   name: string;
   email: string;
   phone: string;
@@ -25,6 +26,7 @@ const ContextProvider = ({ children }: React.PropsWithChildren<{}>) => {
     address: "",
     title: "",
     linkedIn: "",
+    photo: "",
     CV: "",
   });
   const [loggedIn, setLoggedIn] = useState<string | null>(
