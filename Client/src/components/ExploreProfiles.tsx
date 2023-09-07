@@ -27,7 +27,11 @@ const ExploreProfiles = () => {
               style={{ cursor: "pointer" }}
               onClick={() => navigate("/scan", { state: e })}
               className="h-15  rounded-t-lg object-cover md:h-40 md:!rounded-none md:!rounded-l-lg"
-              src="https://tecdn.b-cdn.net/wp-content/uploads/2020/06/vertical.jpg"
+              src={
+                e?.photo
+                  ? e.photo
+                  : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+              }
               alt=""
             />
             <div className="flex flex-col justify-start p-6">
