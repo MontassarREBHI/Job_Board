@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Col, Row } from "react-bootstrap";
-import CloudinaryUploadWidget from "react-cloudinary-upload-widget";
-import "react-cloudinary-upload-widget/dist/index.css";
+import axios from "axios";
+
 import {
   MDBCol,
   MDBInput,
@@ -18,6 +18,16 @@ import {
   MDBListGroupItem,
 } from "mdb-react-ui-kit";
 const ProfileTitle = ({ userInfo, setUserInfo, updateInfo }) => {
+  const [image, setImage] = useState<string>("");
+  const savePicture = () => {
+    const formData = new FormData();
+    formData.append("upload_preset", "n5owabtw");
+    formData.append("file", image);
+    axios
+      .post("https://api.cloudinary.com/v1_1/dde5n1zdt/upload", formData)
+      .then((res) => setUserInfo({ ...userInfo, photo: res.data.url }))
+      .catch((err) => console.log(err.message));
+  };
   return (
     <MDBCol lg="4">
       <MDBCard className="mb-4">
@@ -29,18 +39,44 @@ const ProfileTitle = ({ userInfo, setUserInfo, updateInfo }) => {
                 justifyContent: "center",
               }}
             >
-              <CloudinaryUploadWidget />
-              <MDBCardImage
-                src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
-                alt="avatar"
-                className="rounded-circle"
-                style={{
-                  width: "150px",
-                  marginLeft: "25%",
-                  marginBottom: "2%",
-                }}
-                fluid
-              />
+              <div style={{ position: "relative", display: "inline-block" }}>
+                <MDBCardImage
+                  src={
+                    userInfo.photo
+                      ? userInfo.photo
+                      : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+                  }
+                  alt="avatar"
+                  className="rounded-circle"
+                  style={{
+                    width: "150px",
+                    marginLeft: "5%",
+                    marginBottom: "2%",
+                  }}
+                  fluid
+                />
+                <label htmlFor="">
+                  upload profile picture
+                  <input
+                    style={{
+                      position: "absolute",
+                      top: "0",
+                      left: "10%",
+                      width: "100%",
+                      height: "100%",
+                      opacity: "0",
+                      cursor: "pointer",
+                      zIndex: "2",
+                    }}
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => {
+                      setImage(e.target?.files[0]);
+                    }}
+                  />
+                </label>
+              </div>
+              <Button onClick={savePicture}>Confirm profile picture</Button>
             </Col>
           </Row>
 
