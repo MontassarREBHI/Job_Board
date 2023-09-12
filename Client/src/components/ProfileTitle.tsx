@@ -1,5 +1,7 @@
 import React from "react";
 import { Button, Col, Row } from "react-bootstrap";
+import CloudinaryUploadWidget from "react-cloudinary-upload-widget";
+import "react-cloudinary-upload-widget/dist/index.css";
 import {
   MDBCol,
   MDBInput,
@@ -19,7 +21,7 @@ const ProfileTitle = ({ userInfo, setUserInfo, updateInfo }) => {
   return (
     <MDBCol lg="4">
       <MDBCard className="mb-4">
-        <MDBCardBody className="text-center  ">
+        <MDBCardBody className="text-center">
           <Row>
             <Col
               xs={12}
@@ -27,6 +29,7 @@ const ProfileTitle = ({ userInfo, setUserInfo, updateInfo }) => {
                 justifyContent: "center",
               }}
             >
+              <CloudinaryUploadWidget />
               <MDBCardImage
                 src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
                 alt="avatar"
