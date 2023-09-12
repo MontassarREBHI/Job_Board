@@ -11,7 +11,10 @@ const ExploreProfiles = () => {
   useEffect(() => {
     axios
       .get("http://localhost:5000/user")
-      .then((res) => setApplicants(res.data.applicants))
+      .then((res) => {
+        setApplicants(res.data.applicants);
+        console.log(res.data);
+      })
       .catch((err) => console.log(err.message));
   }, []);
   const contactProfile = (email) => {

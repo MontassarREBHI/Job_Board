@@ -18,11 +18,12 @@ import {
   MDBListGroupItem,
 } from "mdb-react-ui-kit";
 const ProfileTitle = ({ userInfo, setUserInfo, updateInfo }) => {
-  const [image, setImage] = useState<string>("");
-  const savePicture = () => {
+  const [isHovered, setIsHovered] = useState(false);
+
+  const savePicture = (e: React.ChangeEvent<HTMLInputElement>) => {
     const formData = new FormData();
     formData.append("upload_preset", "n5owabtw");
-    formData.append("file", image);
+    formData.append("file", e.target.files[0]);
     axios
       .post("https://api.cloudinary.com/v1_1/dde5n1zdt/upload", formData)
       .then((res) => setUserInfo({ ...userInfo, photo: res.data.url }))
@@ -55,28 +56,26 @@ const ProfileTitle = ({ userInfo, setUserInfo, updateInfo }) => {
                   }}
                   fluid
                 />
-                <label htmlFor="">
-                  upload profile picture
-                  <input
-                    style={{
-                      position: "absolute",
-                      top: "0",
-                      left: "10%",
-                      width: "100%",
-                      height: "100%",
-                      opacity: "0",
-                      cursor: "pointer",
-                      zIndex: "2",
-                    }}
-                    type="file"
-                    accept="image/*"
-                    onChange={(e) => {
-                      setImage(e.target?.files[0]);
-                    }}
-                  />
-                </label>
+
+                <input
+                  style={{
+                    position: "absolute",
+                    top: "0",
+                    left: "10%",
+                    width: "100%",
+                    height: "100%",
+                    opacity: "0",
+                    cursor: "pointer",
+                    zIndex: "2",
+                  }}
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => {
+                    savePicture(e);
+                  }}
+                />
               </div>
-              <Button onClick={savePicture}>Confirm profile picture</Button>
+              {/* <Button onClick={savePicture}>Confirm profile picture</Button> */}
             </Col>
           </Row>
 
