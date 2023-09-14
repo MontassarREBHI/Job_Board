@@ -10,7 +10,8 @@ const getAllApplicants = async (req, res) => {
         .send("no registred applicants yet or something went wrong!");
 };
 const addUser = async (req, res) => {
-  const { name, email, phone, address, CV, role, linkedIn, title } = req.body;
+  const { name, email, phone, address, CV, role, linkedIn, title, about } =
+    req.body;
   const existingUser = await User.findOne({ email });
   if (existingUser)
     return res
@@ -26,6 +27,7 @@ const addUser = async (req, res) => {
       role,
       title,
       linkedIn,
+      about,
     });
     await user.save();
 
@@ -43,11 +45,21 @@ const getUserByEmail = async (req, res) => {
 };
 
 const updateUserProfile = async (req, res) => {
-  const { name, email, phone, address, CV, role, title, linkedIn, photo } =
-    req.body;
+  const {
+    name,
+    email,
+    phone,
+    address,
+    CV,
+    role,
+    title,
+    linkedIn,
+    photo,
+    about,
+  } = req.body;
   const user = await User.findOneAndUpdate(
     { email },
-    { name, phone, address, CV, role, title, linkedIn, photo },
+    { name, phone, address, CV, role, title, linkedIn, photo, about },
     { new: true }
   );
   user

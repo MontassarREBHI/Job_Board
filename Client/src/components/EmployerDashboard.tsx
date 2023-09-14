@@ -69,7 +69,9 @@ const EmployerDashboard = () => {
           </Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link onClick={() => {}}>Explore candidates</Nav.Link>
+          <Nav.Link onClick={() => navigate("/explore")}>
+            Explore candidates
+          </Nav.Link>
         </Nav.Item>
         <Nav.Item>
           <Nav.Link

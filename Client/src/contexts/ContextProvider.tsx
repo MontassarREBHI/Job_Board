@@ -12,6 +12,7 @@ type UserType = {
   title: string;
   linkedIn: string;
   CV: string;
+  about: string;
   // Add other properties as needed
 };
 const userContext = React.createContext<UserType | undefined>(undefined);
@@ -28,6 +29,7 @@ const ContextProvider = ({ children }: React.PropsWithChildren<{}>) => {
     linkedIn: "",
     photo: "",
     CV: "",
+    about: "",
   });
   const [loggedIn, setLoggedIn] = useState<string | null>(
     sessionStorage.getItem("loggedIn") || ""

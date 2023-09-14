@@ -9,4 +9,5 @@ export default interface applicant {
   linkedIn: string;
   title: string;
   photo: string;
+  about: string;
 }

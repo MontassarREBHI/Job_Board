@@ -19,7 +19,15 @@ const upload = multer({ storage: storage });
 const fileUpload = upload.single("CV");
 
 const jobApply = async (req, res) => {
-  const { jobID, email, fullName, country, phoneNumber, applyDate } = req.body;
+  const {
+    jobID,
+    email,
+    fullName,
+    country,
+    phoneNumber,
+    applyDate,
+    closureDate,
+  } = req.body;
   const CVFile = req.file;
   const newApplication = new Application({
     jobID,
@@ -29,6 +37,7 @@ const jobApply = async (req, res) => {
     phoneNumber,
     CV: CVFile.filename,
     applyDate,
+    closureDate,
   });
   await newApplication.save();
   newApplication
@@ -41,8 +50,14 @@ const jobApply = async (req, res) => {
 };
 
 const addJob = async (req, res) => {
-  const { title, companyDesc, requirement, description, employerEmail } =
-    req.body;
+  const {
+    title,
+    companyDesc,
+    requirement,
+    description,
+    employerEmail,
+    closureDate,
+  } = req.body;
   try {
     const job = new Job({
       title,
@@ -50,6 +65,7 @@ const addJob = async (req, res) => {
       requirement,
       description,
       employerEmail,
+      closureDate,
     });
     await job.save();
     res.status(200).json({ job, message: "job offer created successfully" });
@@ -61,7 +77,7 @@ const addJob = async (req, res) => {
 
 const jobList = async (req, res) => {
   try {
-    const list = await Job.find({});
+    const list = await Job.find({ closureDate: { $lt: new Date() } });
     res.status(200).json({ list, message: "list of available jobs" });
   } catch (error) {
     console.error("Error saving user:", error);

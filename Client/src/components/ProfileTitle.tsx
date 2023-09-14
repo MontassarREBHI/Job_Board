@@ -5,15 +5,12 @@ import axios from "axios";
 import {
   MDBCol,
   MDBInput,
-  MDBContainer,
   MDBRow,
+  MDBTextArea,
   MDBCard,
   MDBCardText,
   MDBCardBody,
   MDBCardImage,
-  MDBCardHeader,
-  MDBCardTitle,
-  MDBCardFooter,
   MDBListGroup,
   MDBListGroupItem,
 } from "mdb-react-ui-kit";
@@ -78,7 +75,13 @@ const ProfileTitle = ({ userInfo, setUserInfo, updateInfo }) => {
               {/* <Button onClick={savePicture}>Confirm profile picture</Button> */}
             </Col>
           </Row>
-
+          <label
+            htmlFor="textAreaExample"
+            className="mt-2 form-label fw-bold"
+            style={{ display: "block", textAlign: "left" }}
+          >
+            Title:
+          </label>
           <MDBInput
             id="typeTitle"
             type="text"
@@ -87,6 +90,24 @@ const ProfileTitle = ({ userInfo, setUserInfo, updateInfo }) => {
             onChange={(e) =>
               setUserInfo((prev) => {
                 return { ...prev, title: e.target.value };
+              })
+            }
+          />
+          <label
+            htmlFor="textAreaExample"
+            className="mt-2 form-label fw-bold"
+            style={{ display: "block", textAlign: "left" }}
+          >
+            About:
+          </label>
+          <MDBTextArea
+            placeholder="your about section"
+            id="textAreaExample"
+            rows={4}
+            value={userInfo?.about}
+            onChange={(e) =>
+              setUserInfo((prev) => {
+                return { ...prev, about: e.target.value };
               })
             }
           />

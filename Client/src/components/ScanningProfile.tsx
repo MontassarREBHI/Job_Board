@@ -13,6 +13,7 @@ import { useLocation } from "react-router-dom";
 const ScanningProfile = () => {
   const location = useLocation();
   const profile = location.state;
+  console.log(profile);
   return (
     <div className="gradient-custom-2" style={{ backgroundColor: "#9de2ff" }}>
       <MDBContainer className="py-5 h-100">
@@ -41,6 +42,7 @@ const ScanningProfile = () => {
                 </div>
                 <div className="ms-3" style={{ marginTop: "130px" }}>
                   <MDBTypography tag="h5">{profile.name}</MDBTypography>
+
                   <MDBCardText>{profile.address}</MDBCardText>
                 </div>
               </div>
@@ -48,24 +50,12 @@ const ScanningProfile = () => {
                 className="p-4 text-black"
                 style={{ backgroundColor: "#f8f9fa" }}
               >
-                <div className="d-flex justify-content-end text-center py-1">
+                <div className="d-flex  text-center py-1">
                   <div>
-                    <MDBCardText className="mb-1 h5">253</MDBCardText>
-                    <MDBCardText className="small text-muted mb-0">
-                      Photos
-                    </MDBCardText>
+                    <MDBCardText>{profile.title}</MDBCardText>
                   </div>
-                  <div className="px-3">
-                    <MDBCardText className="mb-1 h5">1026</MDBCardText>
-                    <MDBCardText className="small text-muted mb-0">
-                      Followers
-                    </MDBCardText>
-                  </div>
-                  <div>
-                    <MDBCardText className="mb-1 h5">478</MDBCardText>
-                    <MDBCardText className="small text-muted mb-0">
-                      Following
-                    </MDBCardText>
+                  <div className="px-40">
+                    <MDBCardText>{profile.email}</MDBCardText>
                   </div>
                 </div>
               </div>
@@ -73,14 +63,8 @@ const ScanningProfile = () => {
                 <div className="mb-5">
                   <p className="lead fw-normal mb-1">About</p>
                   <div className="p-4" style={{ backgroundColor: "#f8f9fa" }}>
-                    <MDBCardText className="font-italic mb-1">
-                      {profile.title}
-                    </MDBCardText>
-                    <MDBCardText className="font-italic mb-1">
-                      {profile.email}
-                    </MDBCardText>
                     <MDBCardText className="font-italic mb-0">
-                      Photographer
+                      {profile.about}
                     </MDBCardText>
                   </div>
                 </div>
