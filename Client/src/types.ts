@@ -1,4 +1,4 @@
-export interface applicant {
+export default interface applicant {
   _id: string;
   name: string;
   email: string;

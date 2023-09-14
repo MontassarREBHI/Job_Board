@@ -1,4 +1,3 @@
-import React from "react";
 import {
   MDBCol,
   MDBContainer,
@@ -7,7 +6,6 @@ import {
   MDBCardText,
   MDBCardBody,
   MDBCardImage,
-  MDBBtn,
   MDBTypography,
 } from "mdb-react-ui-kit";
 import { useLocation } from "react-router-dom";
