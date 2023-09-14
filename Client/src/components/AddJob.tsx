@@ -2,6 +2,7 @@ import { Button, FloatingLabel, Form, Nav, ProgressBar } from "react-bootstrap";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import Datepicker from "react-tailwindcss-datepicker";
 import axios from "axios";
 
 const AddJob = () => {
@@ -11,6 +12,7 @@ const AddJob = () => {
     description: "",
     companyDesc: "",
     employerEmail: localStorage.getItem("email"),
+    closureDate: "",
   });
 
   const submitOffer = () => {
@@ -21,7 +23,7 @@ const AddJob = () => {
     } else alert("you need to fill all the fields!");
   };
   const navigate = useNavigate();
-  const now = Object.values(newJob).filter((e) => e !== "").length * 20;
+  const now = (Object.values(newJob).filter((e) => e !== "").length - 1) * 20;
   return (
     <div style={{ margin: "5%", height: "100%" }}>
       <ProgressBar
@@ -90,7 +92,13 @@ const AddJob = () => {
           required
         />
       </FloatingLabel>
-
+      <label>Select a deadline for applications:</label>
+      <input
+        className="d-block mb-4"
+        type="date"
+        value={newJob.closureDate}
+        onChange={(e) => setNewJob({ ...newJob, closureDate: e.target.value })}
+      />
       <Button size="lg" onClick={submitOffer}>
         {" "}
         Publish your offre{" "}

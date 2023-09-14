@@ -27,6 +27,11 @@ const jobSchema = new Schema({
     required: true,
     unique: false,
   },
+  closureDate: {
+    type: Date,
+    required: true,
+    unique: false,
+  },
 });
 
 module.exports = mongoose.model("Job", jobSchema);

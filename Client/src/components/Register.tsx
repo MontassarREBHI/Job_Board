@@ -39,6 +39,7 @@ const Register: React.FC = () => {
                 name: null,
                 title: null,
                 linkedIn: null,
+                about: null,
               })
               .then(async () => {
                 setSignUpAlert(true);
@@ -74,6 +75,7 @@ const Register: React.FC = () => {
           title: null,
           linkedIn: null,
           photo: null,
+          about: null,
         })
         .then(() => {
           // console.log(res.data.user);

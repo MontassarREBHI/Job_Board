@@ -26,7 +26,7 @@ const ExploreProfiles = () => {
     <Row>
       {applicants.map((e) => (
         <Col key={e._id} xs={3}>
-          <BasicProfileCard applicant={e} />
+          <BasicProfileCard applicant={e} contactProfile={contactProfile} />
         </Col>
       ))}
     </Row>

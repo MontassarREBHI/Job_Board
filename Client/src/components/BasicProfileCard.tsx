@@ -9,9 +9,11 @@ import {
   MDBCardImage,
   MDBBtn,
 } from "mdb-react-ui-kit";
+import { useNavigate } from "react-router-dom";
 import { Nav } from "react-bootstrap";
 import applicant from "../types";
 export default function BasicProfileCard({ applicant, contactProfile }) {
+  const navigate = useNavigate();
   return (
     <div>
       <MDBContainer>
@@ -22,6 +24,7 @@ export default function BasicProfileCard({ applicant, contactProfile }) {
                 <div className="d-flex text-black">
                   <div className="flex-shrink-0">
                     <MDBCardImage
+                      onClick={() => navigate("/scan", { state: applicant })}
                       style={{ width: "180px", borderRadius: "10px" }}
                       src={
                         applicant.photo
@@ -53,15 +56,18 @@ export default function BasicProfileCard({ applicant, contactProfile }) {
                         <p className="mb-0">8.5</p>
                       </div>
                     </div>
-                    <div className="d-flex pt-1">
+                    <div className="d-flex pt-1 ">
                       <MDBBtn
                         outline
-                        className="me-1 flex-grow-1"
-                        onClick={() => contactProfile(applicant.email)}
+                        className="me-1 flex-grow-1 btn"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          contactProfile(applicant.email);
+                        }}
                       >
                         Email
                       </MDBBtn>
-                      <MDBBtn className="flex-grow-1">
+                      <MDBBtn className="flex-grow-1 btn" outline>
                         <Nav.Link href={applicant.linkedIn} target="_blank">
                           LinkedIn
                         </Nav.Link>

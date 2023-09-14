@@ -54,3 +54,6 @@ body {
 footer {
   flex-shrink: 0;
 }
+.btn:active {
+  transform: scale(1); /* Reset the scale to 1 on focus */
+}
