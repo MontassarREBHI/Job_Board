@@ -77,7 +77,8 @@ const addJob = async (req, res) => {
 
 const jobList = async (req, res) => {
   try {
-    const list = await Job.find({ closureDate: { $lt: new Date() } });
+    const allThelist = await Job.find({});
+    const list = allThelist.filter((job) => job.closureDate > new Date());
     res.status(200).json({ list, message: "list of available jobs" });
   } catch (error) {
     console.error("Error saving user:", error);
