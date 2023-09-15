@@ -88,7 +88,7 @@ const EmployerDashboard = () => {
       <MDBRow style={{ margin: "2%" }}>
         {openPosts &&
           jobList.map((job) => (
-            <MDBCol md="4" key={job._id}>
+            <MDBCol md="4" className="mb-4" key={job._id}>
               <MDBCard alignment="center">
                 <MDBCardHeader>{job.title}</MDBCardHeader>
                 <MDBCardBody>

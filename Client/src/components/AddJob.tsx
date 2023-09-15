@@ -97,7 +97,12 @@ const AddJob = () => {
         className="d-block mb-4"
         type="date"
         value={newJob.closureDate}
-        onChange={(e) => setNewJob({ ...newJob, closureDate: e.target.value })}
+        onChange={(e) =>
+          setNewJob({
+            ...newJob,
+            closureDate: e.target.value,
+          })
+        }
       />
       <Button size="lg" onClick={submitOffer}>
         {" "}
