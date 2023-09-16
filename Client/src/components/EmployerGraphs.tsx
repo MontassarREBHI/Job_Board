@@ -1,67 +1,98 @@
-// import {
-//   Chart as ChartJS,
-//   CategoryScale,
-//   LinearScale,
-//   BarElement,
-//   Title,
-//   Tooltip,
-//   Legend,
-// } from "chart.js";
+import { Position } from "../types";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
 import { Bar } from "react-chartjs-2";
-// import faker from "faker";
-export const options = {
-  plugins: {
-    title: {
-      display: true,
-      text: "Chart.js Bar Chart - Stacked",
-    },
-  },
-  responsive: true,
-  interaction: {
-    mode: "index" as const,
-    intersect: false,
-  },
-  scales: {
-    x: {
-      stacked: true,
-    },
-    y: {
-      stacked: true,
-    },
-  },
-};
+import { useState, useEffect } from "react";
+import axios from "axios";
 
-const labels = ["January", "February", "March", "April", "May", "June", "July"];
+export default function EmployerGraphs() {
+  const [positions, setPostions] = useState<Position[]>([]);
+  const [applicationsByPosition, setApplicantionsByPosition] = useState([]);
 
-export const data = {
-  labels,
-  datasets: [
-    {
-      label: "Dataset 1",
-      data: labels.map((e) => e),
-      backgroundColor: "rgb(255, 99, 132)",
-      stack: "Stack 0",
+  useEffect(() => {
+    axios
+      .get(`http://localhost:5000/job/${localStorage.getItem("email")}`)
+      .then((res) => {
+        console.log(res.data.listOfJobs);
+        setPostions(res.data.listOfJobs);
+      });
+  }, []);
+
+  useEffect(() => {
+    positions?.map((job) => {
+      axios
+        .get(`http://localhost:5000/job/applications/${job._id}`)
+        .then((res) =>
+          setApplicantionsByPosition((prev) => [
+            ...prev,
+            res.data.applicationToThisJob,
+          ])
+        );
+    });
+  }, [positions]);
+
+  ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    BarElement,
+    Title,
+    Tooltip,
+    Legend
+  );
+
+  const options = {
+    responsive: true,
+
+    plugins: {
+      legend: {
+        position: "top" as const,
+      },
+      title: {
+        display: true,
+        text: "Applications graph by position",
+      },
     },
-    {
-      label: "Dataset 2",
-      data: labels.map((e) => e),
-      backgroundColor: "rgb(75, 192, 192)",
-      stack: "Stack 0",
-    },
-    {
-      label: "Dataset 3",
-      data: labels.map((e) => e),
-      backgroundColor: "rgb(53, 162, 235)",
-      stack: "Stack 1",
-    },
-  ],
-};
-function EmployerGraphs() {
+  };
+
+  const data = {
+    labels: positions.map((post) => post.title),
+    datasets: [
+      {
+        label: "Total rejected",
+        data: [1, 5, 6, 7, 8],
+        //  applicationsByPosition.map(
+        //   (e) =>
+        //     e.filter((application) => application.status === "rejected").length
+        // ),
+        backgroundColor: "rgba(255, 99, 132, 0.5)",
+      },
+      {
+        label: "Total accepted",
+        data: [1, 5, 6, 7, 8],
+        // applicationsByPosition.map(
+        //   (e) =>
+        //     e.filter((application) => application.status === "accepted").length
+        // ),
+        backgroundColor: "rgba(0, 255, 0, 0.5) ",
+      },
+      {
+        label: "Total applications",
+        data: applicationsByPosition.map((e) => e.length),
+        backgroundColor: " rgba(53, 162, 235, 0.5)",
+      },
+    ],
+  };
+
   return (
-    <div>
-      <Bar options={options} data={data} />;
+    <div className="container" style={{ width: "1200px", height: "500px" }}>
+      <Bar options={options} data={data} />
     </div>
   );
 }
-
-export default EmployerGraphs;

@@ -11,3 +11,13 @@ export default interface applicant {
   photo: string;
   about: string;
 }
+
+export interface Position {
+  _id: string;
+  title: string;
+  companyDesc: string;
+  employerEmail: string;
+  requirement: string;
+  description: string;
+  closureDate: Date;
+}
