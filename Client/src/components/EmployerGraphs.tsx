@@ -13,30 +13,45 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 export default function EmployerGraphs() {
-  const [positions, setPostions] = useState<Position[]>([]);
-  const [applicationsByPosition, setApplicantionsByPosition] = useState([]);
+  const [positions, setPostions] = useState([]);
 
   useEffect(() => {
     axios
       .get(`http://localhost:5000/job/${localStorage.getItem("email")}`)
       .then((res) => {
-        console.log(res.data.listOfJobs);
-        setPostions(res.data.listOfJobs);
+        // console.log(res.data.listOfJobs);
+        setPostions(
+          res.data.listOfJobs.map((e) => {
+            return { ...e, applications: [] };
+          })
+        );
       });
   }, []);
 
   useEffect(() => {
-    positions?.map((job) => {
-      axios
-        .get(`http://localhost:5000/job/applications/${job._id}`)
-        .then((res) =>
-          setApplicantionsByPosition((prev) => [
-            ...prev,
-            res.data.applicationToThisJob,
-          ])
-        );
-    });
-  }, [positions]);
+    // applicationsByPosition.length === positions.length && positions.length !== 0
+    //   null
+    //   :
+    if (positions?.length) {
+      positions.map((job) => {
+        axios
+          .get(`http://localhost:5000/job/applications/${job._id}`)
+          .then((res) => {
+            setPostions((prev) => {
+              return prev.map((e) =>
+                e._id === job._id
+                  ? {
+                      ...e,
+                      applications:
+                        res.status == 200 ? res.data.applicationToThisJob : [],
+                    }
+                  : e
+              );
+            });
+          });
+      });
+    }
+  }, [positions.length]);
 
   ChartJS.register(
     CategoryScale,
@@ -62,37 +77,45 @@ export default function EmployerGraphs() {
   };
 
   const data = {
-    labels: positions.map((post) => post.title),
+    labels: positions.map((post) => post?.title),
     datasets: [
       {
         label: "Total rejected",
-        data: [1, 5, 6, 7, 8],
-        //  applicationsByPosition.map(
-        //   (e) =>
-        //     e.filter((application) => application.status === "rejected").length
-        // ),
+
+        data: positions.map((e) =>
+          e.applications.length
+            ? e.applications.filter(
+                (application) => application.status === "rejected"
+              ).length
+            : 0
+        ),
         backgroundColor: "rgba(255, 99, 132, 0.5)",
       },
       {
         label: "Total accepted",
-        data: [1, 5, 6, 7, 8],
-        // applicationsByPosition.map(
-        //   (e) =>
-        //     e.filter((application) => application.status === "accepted").length
-        // ),
-        backgroundColor: "rgba(0, 255, 0, 0.5) ",
+
+        data: positions.map((e) =>
+          e.applications.length
+            ? e.applications.filter(
+                (application) => application.status === "accepted"
+              ).length
+            : 0
+        ),
+        backgroundColor: "rgba(0, 255, 0, 0.5)",
       },
       {
         label: "Total applications",
-        data: applicationsByPosition.map((e) => e.length),
+        data: positions.map((e) => e.applications.length),
         backgroundColor: " rgba(53, 162, 235, 0.5)",
       },
     ],
   };
-
+  console.log(positions);
   return (
-    <div className="container" style={{ width: "1200px", height: "500px" }}>
-      <Bar options={options} data={data} />
+    <div className="container">
+      <div style={{ width: "1200px", height: "500px" }}>
+        <Bar options={options} data={data} />
+      </div>
     </div>
   );
 }

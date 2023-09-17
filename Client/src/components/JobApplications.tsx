@@ -22,7 +22,7 @@ export default function JobApplications() {
     e.preventDefault();
     await axios
       .put("http://localhost:5000/job", { id: id, status: newStatus })
-      .then((res) => console.log(res.data.message))
+      .then((res) => console.log(res.data))
       .catch((err) => err.message);
     setAlert(true);
   };

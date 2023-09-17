@@ -129,7 +129,7 @@ const getApplicationByPost = async (req, res) => {
         applicationToThisJob,
         message: "here are the post's application ",
       })
-    : res.status(400).send("no application found or something went wrong");
+    : res.status(404).send("no application found or something went wrong");
 };
 
 module.exports = {
