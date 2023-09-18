@@ -80,7 +80,7 @@ function App() {
           />
           <Route path="/applications" element={<JobApplications />} />
         </Routes>
-        <Footer />
+        {/* <Footer /> */}
       </Router>
     </>
   );
