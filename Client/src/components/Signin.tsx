@@ -10,26 +10,29 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { auth, provider } from "../config/firebaseConfig";
-import { Container, Form, Button, Col, Nav, Row } from "react-bootstrap";
+import { Container, Form, Button, Col, Nav, Row, Modal } from "react-bootstrap";
 const Signin = () => {
+  const [show, setShow] = useState(false);
+  const [dialogText, setDialogText] = useState("");
   const { setUserInfo, setLoggedIn } = useContext(userContext);
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const navigate = useNavigate();
+  const handleClose = () => setShow(false);
   const signIn = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
-
         localStorage.setItem("email", `${user.email}`);
-
+        setDialogText(`signed in successfully`);
         axios
           .get(`http://localhost:5000/user/${localStorage.getItem("email")}`)
           .then((res) => {
             setUserInfo(res.data.user);
-            alert(`signed in successfully ${user}`);
+
+            setShow(true);
             sessionStorage.setItem("loggedIn", "true");
             //navigate based on the user role (applicant or employer)
             setLoggedIn("true");
@@ -41,7 +44,8 @@ const Signin = () => {
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        alert("error occurred");
+        setDialogText("Wrong email / password combination!");
+        setShow(true);
         console.log(errorCode, errorMessage);
       });
   };
@@ -59,7 +63,8 @@ const Signin = () => {
           .get(`http://localhost:5000/user/${localStorage.getItem("email")}`)
           .then((res) => {
             setUserInfo(res.data.user);
-            alert("signed in successfully ");
+            setDialogText("signed in successfully ");
+            setShow(true);
             sessionStorage.setItem("loggedIn", "true");
             setLoggedIn("true");
             res.data.user?.role === "applicant"
@@ -77,14 +82,16 @@ const Signin = () => {
         // The AuthCredential type that was used.
         const credential = GoogleAuthProvider.credentialFromError(error);
         // ...
-        alert("error occurred");
+        setDialogText("error occurred");
+        setShow(true);
       });
   };
   const resetPassword = () => {
     sendPasswordResetEmail(auth, email)
       .then(() => {
         // Password reset email sent!
-        alert("Password reset email sent!");
+        setDialogText("Password reset email sent!");
+        setShow(true);
         // ..
       })
       .catch((error) => {
@@ -96,6 +103,17 @@ const Signin = () => {
 
   return (
     <Container>
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>alert</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>{dialogText}</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
       <Row className="mt-5">
         <Col xs={4}></Col>
         <Col xs={4}>

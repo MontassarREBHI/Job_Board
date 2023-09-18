@@ -46,12 +46,15 @@ const Home = () => {
       });
   }, []);
   useEffect(() => {
+    const { CV, ...userInfoWithoutCV } = userInfo;
     loggedIn === "true"
-      ? !Object.values(userInfo).every((e) => e !== "")
+      ? //  {...userInfor,cv}=[newUserInfo,]
+        !Object.values(userInfoWithoutCV).every((e) => e !== "")
         ? setShowAlert(true)
         : setShowAlert(false)
       : null;
-  }, []);
+  }, [userInfo]);
+
   useEffect(() => {
     if (!keyWord) {
       setFilteredData(data);
@@ -86,6 +89,7 @@ const Home = () => {
   };
   return (
     <div>
+      <h3>Welcome {userInfo.name}!</h3>
       {showAlert && (
         <Alert variant="warning" dismissible>
           <Alert.Heading>Complete your profile</Alert.Heading>

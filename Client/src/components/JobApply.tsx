@@ -10,7 +10,7 @@ const JobApply = () => {
   const job = useSelector((state: RootState) => state.job.value);
   const navigate = useNavigate();
   useEffect(() => {
-    if (!job.title) navigate("/home");
+    if (!job.title) navigate("/");
   }, []);
 
   return (
@@ -24,7 +24,10 @@ const JobApply = () => {
           }}
         >
           <Alert.Heading>warning</Alert.Heading>
-          <p>refreshing will route you to the home page</p>
+          <p>
+            Avoid refreshing before completing your application not to lose your
+            progress!
+          </p>
         </Alert>
 
         <Row>
