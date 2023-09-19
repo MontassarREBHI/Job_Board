@@ -13,7 +13,7 @@ import {
   MDBCardFooter,
 } from "mdb-react-ui-kit";
 import { useDispatch } from "react-redux";
-import { selectOffer } from "../features/job/jobSlice";
+import { selectOffer } from "../../features/job/jobSlice";
 import EmployerGraphs from "./EmployerGraphs";
 const { useState, useEffect } = React;
 interface jobListType {

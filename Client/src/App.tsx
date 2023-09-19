@@ -6,17 +6,17 @@ import { userContext } from "./contexts/ContextProvider";
 import Register from "./components/Register";
 import Signin from "./components/Signin";
 import NavBar from "./components/NavBar";
-import Home from "./components/Home";
-import JobApply from "./components/JobApply";
-import AddJob from "./components/AddJob";
-import Application from "./components/Application";
-import Profile from "./components/Profile";
-import EmployerDashboard from "./components/EmployerDashboard";
-import JobApplications from "./components/JobApplications";
+import Home from "./components/JobSeeker/Home";
+import JobApply from "./components/JobSeeker/JobApply";
+import AddJob from "./components/Employer/AddJob";
+import Application from "./components/JobSeeker/Application";
+import Profile from "./components/Profile/Profile";
+import EmployerDashboard from "./components/Employer/EmployerDashboard";
+import JobApplications from "./components/Employer/JobApplications";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Footer from "./components/Footer";
-import ExploreProfiles from "./components/ExploreProfiles";
-import ScanningProfile from "./components/ScanningProfile";
+import ExploreProfiles from "./components/Employer/ExploreProfiles";
+import ScanningProfile from "./components/Employer/ScanningProfile";
 
 function App() {
   const { userInfo, loggedIn } = useContext(userContext);

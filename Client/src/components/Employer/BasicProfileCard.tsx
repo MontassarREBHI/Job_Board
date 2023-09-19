@@ -11,7 +11,7 @@ import {
 } from "mdb-react-ui-kit";
 import { useNavigate } from "react-router-dom";
 import { Nav } from "react-bootstrap";
-import applicant from "../types";
+import applicant from "../../types";
 export default function BasicProfileCard({ applicant, contactProfile }) {
   const navigate = useNavigate();
   return (
@@ -20,12 +20,12 @@ export default function BasicProfileCard({ applicant, contactProfile }) {
         <MDBRow className="justify-content-center mb-2">
           <MDBCol>
             <MDBCard style={{ borderRadius: "15px" }}>
-              <MDBCardBody className="p-4">
+              <MDBCardBody className="p-2">
                 <div className="d-flex text-black">
                   <div className="flex-shrink-0">
                     <MDBCardImage
                       onClick={() => navigate("/scan", { state: applicant })}
-                      style={{ width: "180px", borderRadius: "10px" }}
+                      style={{ maxWidth: "100px", borderRadius: "10px" }}
                       src={
                         applicant.photo
                           ? applicant.photo
@@ -39,23 +39,6 @@ export default function BasicProfileCard({ applicant, contactProfile }) {
                     <MDBCardTitle>{applicant.name}</MDBCardTitle>
                     <MDBCardText>{applicant.title}</MDBCardText>
 
-                    <div
-                      className="d-flex justify-content-start rounded-3 p-2 mb-2"
-                      style={{ backgroundColor: "#efefef" }}
-                    >
-                      <div>
-                        <p className="small text-muted mb-1">Articles</p>
-                        <p className="mb-0">41</p>
-                      </div>
-                      <div className="px-3">
-                        <p className="small text-muted mb-1">Followers</p>
-                        <p className="mb-0">976</p>
-                      </div>
-                      <div>
-                        <p className="small text-muted mb-1">Rating</p>
-                        <p className="mb-0">8.5</p>
-                      </div>
-                    </div>
                     <div className="d-flex pt-1 ">
                       <MDBBtn
                         outline

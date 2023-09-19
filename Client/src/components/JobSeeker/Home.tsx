@@ -13,9 +13,9 @@ import { confirmAlert } from "react-confirm-alert"; // Import
 import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { selectOffer } from "../features/job/jobSlice.js";
+import { selectOffer } from "../../features/job/jobSlice.js";
 import { useState, useEffect, useContext } from "react";
-import { userContext } from "../contexts/ContextProvider.js";
+import { userContext } from "../../contexts/ContextProvider.js";
 interface jobType {
   _id: string;
   title: string;
@@ -29,7 +29,7 @@ const Home = () => {
   const [search, setSearch] = useState<boolean>(false);
   const [keyWord, setKeyWord] = useState<string>("");
   const [filteredData, setFilteredData] = useState<jobType[]>(data);
-  const [display, setDisplay] = useState<number>(8);
+  const [display, setDisplay] = useState<number>(3);
   const [showAlert, setShowAlert] = useState(false);
   const navigate = useNavigate();
   const { userInfo, loggedIn } = useContext(userContext);
@@ -89,7 +89,6 @@ const Home = () => {
   };
   return (
     <div>
-      <h3>Welcome {userInfo.name}!</h3>
       {showAlert && (
         <Alert variant="warning" dismissible>
           <Alert.Heading>Complete your profile</Alert.Heading>
@@ -99,12 +98,16 @@ const Home = () => {
           </p>
         </Alert>
       )}
+      <h3
+        className="m-1 "
+        style={{ fontFamily: "times, Helvetica, sans-serif" }}
+      >
+        Welcome {userInfo.name}!
+      </h3>
       <Container
+        className="d-flex mt-5 mb-2 "
         style={{
-          display: "flex",
-          marginInlineStart: "40%",
-          marginTop: "5%",
-          marginBottom: "2%",
+          marginInlineStart: "46%",
         }}
       >
         <Button onClick={() => setSearch((prev) => !prev)}>
@@ -132,17 +135,17 @@ const Home = () => {
       )}
       <Row>
         {filteredData
-          .filter((e, i) => i < display)
+          .filter((_, i) => i < display)
           .map((job: jobType) => (
-            <Col key={job._id} xs={3}>
-              <Card style={{ marginBottom: "3%" }}>
-                <Card.Img variant="top" src="holder.js/100px180" />
+            <Col key={job._id} xl={3} sm={6}>
+              <Card style={{ margin: "1%", maxWidth: "90%" }}>
+                {/* <Card.Img variant="top" src="holder.js/100px180" /> */}
                 <Card.Body>
                   <Card.Title>{job.title}</Card.Title>
                   <Card.Text>
                     {job.description
                       .split(" ")
-                      .filter((e, i) => i <= 6)
+                      .filter((_, i) => i <= 6)
                       .join(" ")}
                     ...
                   </Card.Text>
@@ -161,7 +164,13 @@ const Home = () => {
             </Col>
           ))}
       </Row>
-      <Button onClick={() => setDisplay((prev) => prev + 5)}>see more</Button>
+      <Button
+        className="ml-5"
+        variant="success"
+        onClick={() => setDisplay((prev) => prev + 5)}
+      >
+        see more
+      </Button>
     </div>
   );
 };

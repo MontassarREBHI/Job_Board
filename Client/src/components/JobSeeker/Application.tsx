@@ -1,6 +1,6 @@
 import { Button, Container, Form, ProgressBar } from "react-bootstrap";
 import { useSelector } from "react-redux";
-import { RootState } from "../app/store.js";
+import { RootState } from "../../app/store.js";
 import { useState } from "react";
 import moment from "moment";
 import axios from "axios";

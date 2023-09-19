@@ -1,5 +1,5 @@
 import { useState, useContext, useEffect } from "react";
-import { userContext } from "../contexts/ContextProvider";
+import { userContext } from "../../contexts/ContextProvider";
 import { Button, Col, Row } from "react-bootstrap";
 import {
   MDBCol,

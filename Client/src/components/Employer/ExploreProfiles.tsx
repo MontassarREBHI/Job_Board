@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import applicant from "../types";
+import applicant from "../../types";
 import axios from "axios";
 // import linkedIn from "../assets/icons8-linkedin-48.png";
 // import mail from "../assets/icons8-email-48.png";
@@ -25,7 +25,7 @@ const ExploreProfiles = () => {
   return (
     <Row>
       {applicants.map((e) => (
-        <Col key={e._id} xs={3}>
+        <Col key={e._id} xl={3} sm={6}>
           <BasicProfileCard applicant={e} contactProfile={contactProfile} />
         </Col>
       ))}
