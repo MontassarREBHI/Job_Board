@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { Button, Container, Row, Col, Alert } from "react-bootstrap";
 import { useSelector } from "react-redux";
-import { RootState } from "../app/store.js";
+import { RootState } from "../../app/store.js";
 import { useNavigate } from "react-router-dom";
-import "../App.css"; // Import your custom styles
+import "../../App.css"; // Import your custom styles
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 const JobApply = () => {
