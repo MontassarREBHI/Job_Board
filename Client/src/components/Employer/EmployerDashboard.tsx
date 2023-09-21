@@ -35,7 +35,7 @@ const EmployerDashboard = () => {
   const navigate = useNavigate();
   const [jobList, setJobList] = useState<jobListType[]>([]);
   const [openPosts, setOpenPosts] = useState<boolean>(false);
-  const [openGraphs, setOpenGraphs] = useState<boolean>(false);
+  const [openGraphs, setOpenGraphs] = useState<boolean>(true);
   useEffect(() => {
     axios
       .get(`http://localhost:5000/job/${localStorage.getItem("email")}`)
@@ -80,7 +80,7 @@ const EmployerDashboard = () => {
               setOpenGraphs((prev) => !prev);
             }}
           >
-            Data Analytics
+            {!openGraphs ? "Data Analytics" : "Close the Graphs"}
           </Nav.Link>
         </Nav.Item>
       </Nav>

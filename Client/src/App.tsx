@@ -17,6 +17,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Footer from "./components/Footer";
 import ExploreProfiles from "./components/Employer/ExploreProfiles";
 import ScanningProfile from "./components/Employer/ScanningProfile";
+import SimpleBottomNavigation from "./components/LabelBottomNavigation";
 
 function App() {
   const { userInfo, loggedIn } = useContext(userContext);
@@ -24,6 +25,7 @@ function App() {
     <>
       <Router>
         <NavBar />
+        <SimpleBottomNavigation />
         <Routes>
           <Route
             path="/"
