@@ -1,4 +1,10 @@
-import { Button, FloatingLabel, Form, Nav, ProgressBar } from "react-bootstrap";
+import {
+  Button,
+  FloatingLabel,
+  Form,
+  ProgressBar,
+  Modal,
+} from "react-bootstrap";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -6,6 +12,8 @@ import Datepicker from "react-tailwindcss-datepicker";
 import axios from "axios";
 
 const AddJob = () => {
+  const [show, setShow] = useState(false);
+  const [dialogText, setDialogText] = useState("");
   const [newJob, setNewJob] = useState({
     title: "",
     requirement: "",
@@ -14,18 +22,38 @@ const AddJob = () => {
     employerEmail: localStorage.getItem("email"),
     closureDate: "",
   });
+  const navigate = useNavigate();
+  const handleClose = () => {
+    setShow(false);
+    dialogText === "Job added successfully!" ? navigate("/dash") : null;
+  };
 
   const submitOffer = () => {
     if (Object.values(newJob).every((value) => value !== "")) {
-      axios
-        .post("http://localhost:5000/job", newJob)
-        .then(() => alert("Job added successfully!"));
-    } else alert("you need to fill all the fields!");
+      axios.post("http://localhost:5000/job", newJob).then(() => {
+        setDialogText("Job added successfully!");
+        setShow(true);
+      });
+    } else {
+      setDialogText("you need to fill all the fields!");
+      setShow(true);
+    }
   };
-  const navigate = useNavigate();
+
   const now = (Object.values(newJob).filter((e) => e !== "").length - 1) * 20;
   return (
     <div style={{ margin: "5%", height: "100%" }}>
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>alert</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>{dialogText}</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
       <ProgressBar
         now={now}
         label={`${now}%`}

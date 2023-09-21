@@ -1,10 +1,14 @@
-import { Button, Container, Form, ProgressBar } from "react-bootstrap";
+import { Button, Container, Form, ProgressBar, Modal } from "react-bootstrap";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { RootState } from "../../app/store.js";
 import { useState } from "react";
 import moment from "moment";
 import axios from "axios";
 const Application = () => {
+  const navigate = useNavigate();
+  const [show, setShow] = useState(false);
+  const [dialogText, setDialogText] = useState("");
   const [application, setApplication] = useState({
     email: "",
     fullName: "",
@@ -14,7 +18,10 @@ const Application = () => {
   });
   const [filePath, setFilePath] = useState<string>("");
   const job = useSelector((state: RootState) => state.job.value);
-
+  const handleClose = () => {
+    setShow(false);
+    dialogText === "Application submitted successfully!" ? navigate("/") : null;
+  };
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const formData = new FormData();
@@ -37,16 +44,28 @@ const Application = () => {
           },
         }
       );
-
-      alert(response.data.message);
+      setDialogText("Application submitted successfully!");
+      setShow(true);
       setFilePath(response.data.path);
     } catch (error) {
-      console.error("Error:", error?.message);
+      setDialogText(error.message);
+      setShow(true);
     }
   };
   const now = Object.values(application).filter((e) => e !== "").length * 20;
   return (
     <Container style={{ marginTop: "5%" }}>
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>alert</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>{dialogText}</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
       <h1
         style={{ fontFamily: "serif", marginBottom: "2%", textAlign: "center" }}
       >
