@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { Button, Col, Row } from "react-bootstrap";
 import axios from "axios";
-
+import { UserType } from "../../types";
 import {
   MDBCol,
   MDBInput,
@@ -14,8 +14,13 @@ import {
   MDBListGroup,
   MDBListGroupItem,
 } from "mdb-react-ui-kit";
-const ProfileTitle = ({ userInfo, setUserInfo, updateInfo }) => {
-  const [isHovered, setIsHovered] = useState(false);
+interface ProfileType {
+  updateInfo: () => void;
+  userInfo: UserType;
+  setUserInfo: React.Dispatch<React.SetStateAction<UserType>>;
+}
+const ProfileTitle = ({ userInfo, setUserInfo, updateInfo }: ProfileType) => {
+  // const [isHovered, setIsHovered] = useState<Boolean>(false);
 
   const savePicture = (e: React.ChangeEvent<HTMLInputElement>) => {
     const formData = new FormData();

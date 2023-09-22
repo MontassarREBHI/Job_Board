@@ -17,15 +17,15 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Footer from "./components/Footer";
 import ExploreProfiles from "./components/Employer/ExploreProfiles";
 import ScanningProfile from "./components/Employer/ScanningProfile";
-import SimpleBottomNavigation from "./components/LabelBottomNavigation";
+import { UserContextType } from "./types";
 
 function App() {
-  const { userInfo, loggedIn } = useContext(userContext);
+  const { userInfo, loggedIn } = useContext<UserContextType>(userContext);
   return (
     <>
       <Router>
         <NavBar />
-        <SimpleBottomNavigation />
+
         <Routes>
           <Route
             path="/"

@@ -9,6 +9,7 @@ import {
   MDBCardTitle,
   MDBCardFooter,
 } from "mdb-react-ui-kit";
+
 function RecentAppsProfile({ userInfo, apps, contactEmployer }) {
   return (
     <MDBRow>
@@ -28,7 +29,7 @@ function RecentAppsProfile({ userInfo, apps, contactEmployer }) {
       )}
       {userInfo?.role === "applicant" &&
         apps
-          .filter((e, i) => i < 2)
+          .filter((_, i) => i < 2)
           ?.map((app) => (
             <MDBCol md="6" key={app._id}>
               <MDBCard alignment="center">

@@ -1,23 +1,13 @@
 /* eslint-disable react-refresh/only-export-components */
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, ReactNode } from "react";
 import axios from "axios";
-type UserType = {
-  _id: string;
-  photo: string;
-  name: string;
-  email: string;
-  phone: string;
-  role: string;
-  address: string;
-  title: string;
-  linkedIn: string;
-  CV: string;
-  about: string;
-  // Add other properties as needed
+import { UserContextType, UserType } from "../types";
+type ContextProviderProps = {
+  children: ReactNode;
 };
-const userContext = React.createContext<UserType | undefined>(undefined);
+const userContext = React.createContext<UserContextType | undefined>(undefined);
 
-const ContextProvider = ({ children }: React.PropsWithChildren<{}>) => {
+const ContextProvider = ({ children }: ContextProviderProps) => {
   const [userInfo, setUserInfo] = useState<UserType>({
     _id: "",
     name: "",
