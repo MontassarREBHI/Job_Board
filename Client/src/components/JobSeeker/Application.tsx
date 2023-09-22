@@ -61,8 +61,8 @@ const Application = () => {
         </Modal.Header>
         <Modal.Body>{dialogText}</Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
+          <Button variant="success" onClick={handleClose}>
+            explore more opportunities
           </Button>
         </Modal.Footer>
       </Modal>

@@ -16,13 +16,15 @@ import { useDispatch } from "react-redux";
 import { selectOffer } from "../features/job/jobSlice.js";
 import { useState, useEffect, useContext } from "react";
 import { userContext } from "../contexts/ContextProvider.js";
-import React from "react";
+
+import { UserContextType } from "../types.js";
 interface jobType {
   _id: string;
   title: string;
   description: string;
   companyDesc: string;
-  requirement: string;
+  jobRequirement: string;
+  employerEmail: string;
 }
 
 const Home = () => {
@@ -33,7 +35,7 @@ const Home = () => {
   const [display, setDisplay] = useState<number>(8);
   const [showAlert, setShowAlert] = useState(false);
   const navigate = useNavigate();
-  const { userInfo, loggedIn } = useContext(userContext);
+  const { userInfo, loggedIn } = useContext<UserContextType>(userContext);
   const dispatch = useDispatch();
   useEffect(() => {
     axios
@@ -83,7 +85,7 @@ const Home = () => {
       ],
     });
   };
-  const AlreadySingedIn = (selectedJob) => {
+  const AlreadySingedIn = (selectedJob: jobType) => {
     dispatch(selectOffer(selectedJob));
 
     navigate("/jobApply");

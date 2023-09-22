@@ -1,16 +1,28 @@
-import { Container, Navbar, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import profilePic from "../assets/icons8-customer-40.png";
+import { UserContextType } from "../types";
+import * as React from "react";
+import BottomNavigation from "@mui/material/BottomNavigation";
+import BottomNavigationAction from "@mui/material/BottomNavigationAction";
+import LogoutIcon from "@mui/icons-material/Logout";
+import HomeIcon from "@mui/icons-material/Home";
+import ProfileIcon from "@mui/icons-material/AccountCircle";
 
+import LoginIcon from "@mui/icons-material/Login";
+import GridViewIcon from "@mui/icons-material/GridView";
 import { signOut } from "firebase/auth";
 import { auth } from "../config/firebaseConfig";
 import { userContext } from "../contexts/ContextProvider";
-import { useState, useEffect, useContext } from "react";
+import { useContext } from "react";
 // import profileLogo from "./path-to-profile-logo.png"; // Import your profile logo image
 
 function NavBar(): JSX.Element {
   const { userInfo, loggedIn, setLoggedIn, setUserInfo } =
-    useContext(userContext);
+    useContext<UserContextType>(userContext);
+  const [value, setValue] = React.useState("recents");
+
+  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
+    setValue(newValue);
+  };
 
   const logOut = () => {
     return loggedIn === "false"
@@ -29,7 +41,9 @@ function NavBar(): JSX.Element {
               address: "",
               title: "",
               linkedIn: "",
+              photo: "",
               CV: "",
+              about: "",
             });
           })
           .catch((error) => {
@@ -37,38 +51,50 @@ function NavBar(): JSX.Element {
           });
   };
   return (
-    <Navbar bg="primary" data-bs-theme="dark">
-      <Container>
-        <Navbar.Brand>
-          <Link to={userInfo?.role === "employer" ? "/dash" : "/"}>
-            {userInfo?.role === "employer" ? "Dashboard" : "Home"}
-          </Link>
-        </Navbar.Brand>
-        <Nav className="me-auto">
-          {loggedIn !== "true" && (
-            <Nav.Link>
-              <Link to="/register">Sign up</Link>
-            </Nav.Link>
+    <div>
+      <BottomNavigation
+        sx={{ width: "100%", backgroundColor: "#DAE4E6" }}
+        value={value}
+        onChange={handleChange}
+      >
+        <Link to={userInfo?.role === "employer" ? "/dash" : "/"}>
+          <BottomNavigationAction
+            label={userInfo?.role === "employer" ? "Dashboard" : "Home"}
+            value={userInfo?.role === "employer" ? "dashBoard" : "Home"}
+            icon={
+              userInfo?.role === "employer" ? <GridViewIcon /> : <HomeIcon />
+            }
+            sx={{ marginLeft: "0" }}
+          />
+        </Link>
+        <Link to="/signin" onClick={logOut}>
+          {loggedIn === "true" ? (
+            <BottomNavigationAction
+              sx={{ marginLeft: "35%" }}
+              label="Logout"
+              value="logOut"
+              icon={<LogoutIcon />}
+            />
+          ) : (
+            <BottomNavigationAction
+              sx={{ marginLeft: "35%" }}
+              label="Login"
+              value="login"
+              icon={<LoginIcon />}
+            />
           )}
-          <Nav.Link>
-            <Link to="/signin" onClick={logOut}>
-              Sign {loggedIn === "true" ? "out" : "in"}
-            </Link>
-          </Nav.Link>
-        </Nav>
-        <Nav>
-          <Nav.Link>
-            <Link to="/profile">
-              <img
-                src={profilePic} // Use the imported profile logo image source
-                alt="Profile Logo"
-                style={{ width: "30px", height: "30px", borderRadius: "50%" }}
-              />
-            </Link>
-          </Nav.Link>
-        </Nav>
-      </Container>
-    </Navbar>
+        </Link>
+
+        <Link to="/profile">
+          <BottomNavigationAction
+            label="Profile"
+            value="Profile"
+            icon={<ProfileIcon />}
+            className="ml-24"
+          />
+        </Link>
+      </BottomNavigation>
+    </div>
   );
 }
 

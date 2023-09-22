@@ -6,7 +6,8 @@ import {
   MDBCardText,
   MDBCardBody,
 } from "mdb-react-ui-kit";
-function PersonalInfo({ userInfo, setUserInfo }) {
+import { UserContextType } from "../../types";
+function PersonalInfo({ userInfo, setUserInfo }: UserContextType) {
   return (
     <MDBCard className="mb-4">
       <MDBCardBody>
