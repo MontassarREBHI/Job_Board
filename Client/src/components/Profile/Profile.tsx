@@ -1,29 +1,15 @@
 import { useState, useContext, useEffect } from "react";
 import { userContext } from "../../contexts/ContextProvider";
-import { Button, Col, Row } from "react-bootstrap";
-import {
-  MDBCol,
-  MDBInput,
-  MDBContainer,
-  MDBRow,
-  MDBCard,
-  MDBCardText,
-  MDBCardBody,
-  MDBCardImage,
-  MDBCardHeader,
-  MDBCardTitle,
-  MDBCardFooter,
-  MDBListGroup,
-  MDBListGroupItem,
-} from "mdb-react-ui-kit";
+
+import { MDBCol, MDBContainer, MDBRow } from "mdb-react-ui-kit";
 import axios from "axios";
-import { Form } from "react-bootstrap";
+
 import ProfileTitle from "./ProfileTitle";
 import PersonalInfo from "./PersonalInfo";
 import RecentAppsProfile from "./RecentAppsProfile";
-
+import { UserContextType } from "../../types";
 export default function Profile() {
-  const { userInfo, setUserInfo } = useContext(userContext);
+  const { userInfo, setUserInfo } = useContext<UserContextType>(userContext);
   const [apps, setApps] = useState([]);
   useEffect(() => {
     axios
