@@ -45,15 +45,6 @@ const Home = () => {
         console.log(err.message);
       });
   }, []);
-  useEffect(() => {
-    const { CV, ...userInfoWithoutCV } = userInfo;
-    loggedIn === "true"
-      ? //  {...userInfor,cv}=[newUserInfo,]
-        !Object.values(userInfoWithoutCV).every((e) => e !== "")
-        ? setShowAlert(true)
-        : setShowAlert(false)
-      : null;
-  }, [userInfo]);
 
   useEffect(() => {
     if (!keyWord) {
