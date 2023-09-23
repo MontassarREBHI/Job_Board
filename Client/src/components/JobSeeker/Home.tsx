@@ -56,6 +56,14 @@ const Home = () => {
       setFilteredData(filteredJobs);
     }
   }, [keyWord]);
+  useEffect(() => {
+    const { CV, ...userInfoWithoutCV } = userInfo;
+    loggedIn === "true"
+      ? !Object.values(userInfoWithoutCV).every((e) => e !== "")
+        ? setShowAlert(true)
+        : setShowAlert(false)
+      : null;
+  }, [userInfo]);
 
   const signInToApply = () => {
     confirmAlert({
@@ -79,7 +87,7 @@ const Home = () => {
     navigate("/jobApply");
   };
   return (
-    <div>
+    <div className="m-2">
       {showAlert && (
         <Alert variant="warning" dismissible>
           <Alert.Heading>Complete your profile</Alert.Heading>
@@ -93,7 +101,7 @@ const Home = () => {
         className="m-1 "
         style={{ fontFamily: "times, Helvetica, sans-serif" }}
       >
-        Welcome {userInfo.name}!
+        Welcome {userInfo?.name}!
       </h3>
       <Container
         className="d-flex mt-5 mb-2 "

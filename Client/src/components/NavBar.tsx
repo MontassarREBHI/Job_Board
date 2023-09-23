@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { UserContextType } from "../types";
 import * as React from "react";
 import { BottomNavigation, BottomNavigationAction } from "@mui/material/";
-
+import logo from "../assets/logo.png";
 import LogoutIcon from "@mui/icons-material/Logout";
 import HomeIcon from "@mui/icons-material/Home";
 import ProfileIcon from "@mui/icons-material/AccountCircle";
@@ -57,6 +57,11 @@ function NavBar(): JSX.Element {
       value={value}
       onChange={handleChange}
     >
+      <img
+        src={logo}
+        alt="logo"
+        style={{ borderRadius: "50%", marginRight: "5%" }}
+      />
       <Col xs={1} md={1} lg={1}>
         <Link to={userInfo?.role === "employer" ? "/dash" : "/"}>
           <BottomNavigationAction
