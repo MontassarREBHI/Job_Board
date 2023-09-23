@@ -1,4 +1,4 @@
-import { Container, Form, Button } from "react-bootstrap";
+import { Col, Form, Button, Row } from "react-bootstrap";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -101,71 +101,83 @@ const Register: React.FC = () => {
           Account registered successfully.
         </Alert>
       )}
-      <Container className="d-flex justify-content-center align-items-center mt-5">
-        <Form onSubmit={(e) => registUser(e)}>
-          <h2>Sign Up</h2>
-          <Form.Group className="mb-3" controlId="role">
-            <Form.Label>Employer or job seeker ?</Form.Label>
-            <Form.Select
-              aria-label="Select your role"
-              onChange={(e) => setNewRole(e.target.value)}
-            >
-              <option value="applicant">applicant</option>
-              <option value="employer">employer</option>
-            </Form.Select>
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="email">
-            <Form.Label>Email address</Form.Label>
-            <Form.Control
-              type="email"
-              placeholder="Enter email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-            <Form.Text className="text-muted">
-              We'll never share your email with anyone else.
-            </Form.Text>
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="password">
-            <Form.Label>Password</Form.Label>
-            <Form.Control
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="confirmPassword">
-            <Form.Label>Confirm Password</Form.Label>
-            <Form.Control
-              type="password"
-              placeholder="Re-type Password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-            />
-          </Form.Group>
-          <div className="d-flex">
-            <Button variant="primary" type="submit">
-              Sign Up
-            </Button>
-            <Button
-              className="ms-12 d-flex align-items-center"
-              onClick={signinWithGoogle}
-            >
-              <img
-                src="https://img.icons8.com/color/16/000000/google-logo.png"
-                alt="Google Logo"
-                className="me-2"
+      <Row className="w-max">
+        <Col md={1} ms={0} xs={0} lg={3}></Col>
+        <Col>
+          <Form
+            onSubmit={(e) => registUser(e)}
+            className=" justify-content-center align-items-center m-5"
+          >
+            <h2 style={{ textAlign: "center" }}>Sign Up</h2>
+            <Form.Group className="mb-3" controlId="role">
+              <Form.Label>Employer or job seeker ?</Form.Label>
+              <Form.Select
+                aria-label="Select your role"
+                onChange={(e) => setNewRole(e.target.value)}
+              >
+                <option value="applicant">applicant</option>
+                <option value="employer">employer</option>
+              </Form.Select>
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="email">
+              <Form.Label>Email address</Form.Label>
+              <Form.Control
+                type="email"
+                placeholder="Enter email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
               />
-              Google signup
-            </Button>
-          </div>
-          <div className="mt-3 text-center">
-            Already have an account? <Link to="/signin">Sign in</Link>
-          </div>
-        </Form>
-      </Container>
+              <Form.Text className="text-muted">
+                We'll never share your email with anyone else.
+              </Form.Text>
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="password">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="confirmPassword">
+              <Form.Label>Confirm Password</Form.Label>
+              <Form.Control
+                type="password"
+                placeholder="Re-type Password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+              />
+            </Form.Group>
+            <div className="d-flex flex-column flex-md-row align-items-center justify-content-center">
+              <Button
+                variant="primary"
+                type="submit"
+                className="btn btn-primary"
+              >
+                Sign Up
+              </Button>
+              <Button
+                onClick={signinWithGoogle}
+                className="btn btn-primary mt-3 mt-md-0 ms-md-3"
+              >
+                <img
+                  src="https://img.icons8.com/color/16/000000/google-logo.png"
+                  alt="Google Logo"
+                  className="me-2"
+                />
+                Google signup
+              </Button>
+            </div>
+
+            <div className="mt-3 text-center">
+              Already have an account? <Link to="/signin">Sign in</Link>
+            </div>
+          </Form>
+        </Col>
+        <Col md={1} ms={0} xs={0} lg={3}></Col>
+      </Row>
     </>
   );
 };

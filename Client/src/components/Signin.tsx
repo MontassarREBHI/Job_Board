@@ -114,10 +114,12 @@ const Signin = () => {
           </Button>
         </Modal.Footer>
       </Modal>
+
       <Row className="mt-5">
-        <Col xs={4}></Col>
-        <Col xs={4}>
+        <Col xs={0} md={1} lg={3}></Col>
+        <Col>
           <Form onSubmit={(e) => signIn(e)}>
+            <h2 style={{ textAlign: "center" }}>Sign in</h2>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Email address</Form.Label>
               <Form.Control
@@ -186,6 +188,7 @@ const Signin = () => {
             </div>
           </Form>
         </Col>
+        <Col xs={0} md={1} lg={3}></Col>
       </Row>
     </Container>
   );

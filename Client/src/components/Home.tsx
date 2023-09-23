@@ -91,8 +91,7 @@ const Home = () => {
     navigate("/jobApply");
   };
   return (
-    <div>
-      <h3>Welcome {userInfo.name}!</h3>
+    <>
       {showAlert && (
         <Alert variant="warning" dismissible>
           <Alert.Heading>Complete your profile</Alert.Heading>
@@ -165,7 +164,7 @@ const Home = () => {
           ))}
       </Row>
       <Button onClick={() => setDisplay((prev) => prev + 5)}>see more</Button>
-    </div>
+    </>
   );
 };
 

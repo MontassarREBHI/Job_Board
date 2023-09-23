@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
 import { UserContextType } from "../types";
 import * as React from "react";
-import BottomNavigation from "@mui/material/BottomNavigation";
-import BottomNavigationAction from "@mui/material/BottomNavigationAction";
+import { BottomNavigation, BottomNavigationAction } from "@mui/material/";
+
 import LogoutIcon from "@mui/icons-material/Logout";
 import HomeIcon from "@mui/icons-material/Home";
 import ProfileIcon from "@mui/icons-material/AccountCircle";
-
+import { Row, Col } from "react-bootstrap";
 import LoginIcon from "@mui/icons-material/Login";
 import GridViewIcon from "@mui/icons-material/GridView";
 import { signOut } from "firebase/auth";
@@ -51,12 +51,13 @@ function NavBar(): JSX.Element {
           });
   };
   return (
-    <div>
-      <BottomNavigation
-        sx={{ width: "100%", backgroundColor: "#DAE4E6" }}
-        value={value}
-        onChange={handleChange}
-      >
+    <BottomNavigation
+      className="Row"
+      sx={{ width: "100%", backgroundColor: "#DAE4E6" }}
+      value={value}
+      onChange={handleChange}
+    >
+      <Col xs={1} md={1} lg={1}>
         <Link to={userInfo?.role === "employer" ? "/dash" : "/"}>
           <BottomNavigationAction
             label={userInfo?.role === "employer" ? "Dashboard" : "Home"}
@@ -64,20 +65,20 @@ function NavBar(): JSX.Element {
             icon={
               userInfo?.role === "employer" ? <GridViewIcon /> : <HomeIcon />
             }
-            sx={{ marginLeft: "0" }}
           />
         </Link>
+      </Col>
+      <Col xs={3} md={4} lg={6}></Col>
+      <Col lg={3} md={4}>
         <Link to="/signin" onClick={logOut}>
           {loggedIn === "true" ? (
             <BottomNavigationAction
-              sx={{ marginLeft: "35%" }}
               label="Logout"
               value="logOut"
               icon={<LogoutIcon />}
             />
           ) : (
             <BottomNavigationAction
-              sx={{ marginLeft: "35%" }}
               label="Login"
               value="login"
               icon={<LoginIcon />}
@@ -90,11 +91,10 @@ function NavBar(): JSX.Element {
             label="Profile"
             value="Profile"
             icon={<ProfileIcon />}
-            className="ml-24"
           />
         </Link>
-      </BottomNavigation>
-    </div>
+      </Col>
+    </BottomNavigation>
   );
 }
 
