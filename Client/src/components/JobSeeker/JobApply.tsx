@@ -34,7 +34,7 @@ const JobApply = () => {
           <Col md={8}>
             <h1 className="position-title">{job.title}</h1>
 
-            <img src={job.imageUrl} alt="Job" className="job-image img-fluid" />
+            {/* <img src={job.imageUrl} alt="Job" className="job-image img-fluid" /> */}
           </Col>
           <Col md={4}>
             <Button
