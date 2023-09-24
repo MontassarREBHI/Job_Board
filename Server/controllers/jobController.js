@@ -16,19 +16,24 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-const fileUpload = upload.single("CV");
+const fileUpload = upload?.single("CV");
 
 const jobApply = async (req, res) => {
-  const {
-    jobID,
-    email,
-    fullName,
-    country,
-    phoneNumber,
-    applyDate,
-    closureDate,
-  } = req.body;
-  const CVFile = req.file;
+  const { jobID, email, fullName, country, phoneNumber, applyDate } = req.body;
+  const CVFile = req?.file;
+  if (
+    !jobID ||
+    !email ||
+    !fullName ||
+    !country ||
+    !phoneNumber ||
+    !applyDate ||
+    !CVFile
+  )
+    return res.status(400).send("inputs not filled correctly");
+  const existingApplication = await Application.findOne({ jobID, email });
+  if (existingApplication)
+    return res.status(400).send("you already applied for this position");
   const newApplication = new Application({
     jobID,
     email,
@@ -37,7 +42,6 @@ const jobApply = async (req, res) => {
     phoneNumber,
     CV: CVFile.filename,
     applyDate,
-    closureDate,
   });
   await newApplication.save();
   newApplication

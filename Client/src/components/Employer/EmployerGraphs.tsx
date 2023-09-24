@@ -1,4 +1,3 @@
-import { Position } from "../../types";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -19,7 +18,6 @@ export default function EmployerGraphs() {
     axios
       .get(`http://localhost:5000/job/${localStorage.getItem("email")}`)
       .then((res) => {
-        // console.log(res.data.listOfJobs);
         setPostions(
           res.data.listOfJobs.map((e) => {
             return { ...e, applications: [] };
@@ -110,7 +108,7 @@ export default function EmployerGraphs() {
       },
     ],
   };
-  console.log(positions);
+
   return (
     <div className="container">
       <div style={{ width: "1200px", height: "500px" }}>
