@@ -73,7 +73,7 @@ function NavBar(): JSX.Element {
           />
         </Link>
       </Col>
-      <Col xs={3} md={4} lg={6}></Col>
+      <Col xs={2} md={4} lg={6}></Col>
       <Col lg={3} md={4}>
         <Link to="/signin" onClick={logOut}>
           {loggedIn === "true" ? (

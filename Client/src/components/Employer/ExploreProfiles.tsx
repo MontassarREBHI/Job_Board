@@ -14,7 +14,6 @@ const ExploreProfiles = () => {
       .get("http://localhost:5000/user")
       .then((res) => {
         setApplicants(res.data.applicants);
-        console.log(res.data);
       })
       .catch((err) => console.log(err.message));
   }, []);
@@ -23,13 +22,25 @@ const ExploreProfiles = () => {
     window.location.href = mailtoLink;
   };
   return (
-    <Row>
-      {applicants.map((e) => (
-        <Col key={e._id} xl={3} sm={6}>
-          <BasicProfileCard applicant={e} contactProfile={contactProfile} />
-        </Col>
-      ))}
-    </Row>
+    <>
+      <h1
+        style={{
+          margin: "2%",
+          textAlign: "center",
+          fontFamily: "times",
+          borderStyle: "ridge",
+        }}
+      >
+        List of profiles
+      </h1>
+      <Row className="mt-3">
+        {applicants.map((e) => (
+          <Col key={e._id} xl={3} sm={6}>
+            <BasicProfileCard applicant={e} contactProfile={contactProfile} />
+          </Col>
+        ))}
+      </Row>
+    </>
   );
 };
 
