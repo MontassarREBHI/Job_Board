@@ -5,6 +5,7 @@ import { RootState } from "../../app/store.js";
 import { useState } from "react";
 import moment from "moment";
 import axios from "axios";
+import CountrySelector from "../CountrySelector.js";
 const Application = () => {
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
@@ -20,7 +21,10 @@ const Application = () => {
   const job = useSelector((state: RootState) => state.job.value);
   const handleClose = () => {
     setShow(false);
-    dialogText === "Application submitted successfully!" ? navigate("/") : null;
+    dialogText === "Application submitted successfully!" ||
+    dialogText === "you already applied for this position"
+      ? navigate("/")
+      : null;
   };
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -47,8 +51,10 @@ const Application = () => {
       setDialogText("Application submitted successfully!");
       setShow(true);
       setFilePath(response.data.path);
-    } catch (error) {
-      setDialogText(error.message);
+    } catch (error: any) {
+      console.error(error);
+      const errorMessage = error.response?.data || "An error occurred.";
+      setDialogText(errorMessage);
       setShow(true);
     }
   };
@@ -62,7 +68,10 @@ const Application = () => {
         <Modal.Body>{dialogText}</Modal.Body>
         <Modal.Footer>
           <Button variant="success" onClick={handleClose}>
-            explore more opportunities
+            {dialogText === "Application submitted successfully!" ||
+            dialogText === "you already applied for this position"
+              ? "explore more opportunities"
+              : "close"}
           </Button>
         </Modal.Footer>
       </Modal>
@@ -110,12 +119,16 @@ const Application = () => {
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicText">
           <Form.Label>Country</Form.Label>
-          <Form.Control
+          {/* <Form.Control
             type="text"
             placeholder="country"
             onChange={(e) =>
               setApplication({ ...application, country: e.target.value })
             }
+          /> */}
+          <CountrySelector
+            application={application}
+            setApplication={setApplication}
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicText">
@@ -141,9 +154,7 @@ const Application = () => {
             }
           />
         </Form.Group>
-        {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
-          <Form.Check type="checkbox" label="Check me out" />
-        </Form.Group> */}
+
         <Button
           variant="primary"
           type="submit"

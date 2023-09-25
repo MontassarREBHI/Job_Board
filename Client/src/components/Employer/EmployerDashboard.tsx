@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Nav } from "react-bootstrap";
+import { Button, Nav, Col } from "react-bootstrap";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -45,6 +45,7 @@ const EmployerDashboard = () => {
   return (
     <div>
       <Nav
+        className="Row"
         variant="tabs"
         defaultActiveKey="/home"
         style={{
@@ -53,36 +54,45 @@ const EmployerDashboard = () => {
           display: "flex",
         }}
       >
-        <Nav.Item>
-          <Nav.Link as={Link} to="/addjob">
-            Publish a new job
-          </Nav.Link>
-        </Nav.Item>
-        <Nav.Item>
-          <Nav.Link
-            onClick={() => {
-              setOpenGraphs(false);
-              setOpenPosts((prev) => !prev);
-            }}
-          >
-            {!openPosts ? "manage applications" : "close list of application"}
-          </Nav.Link>
-        </Nav.Item>
-        <Nav.Item>
-          <Nav.Link onClick={() => navigate("/explore")}>
-            Explore candidates
-          </Nav.Link>
-        </Nav.Item>
-        <Nav.Item>
-          <Nav.Link
-            onClick={() => {
-              setOpenPosts(false);
-              setOpenGraphs((prev) => !prev);
-            }}
-          >
-            {!openGraphs ? "Data Analytics" : "Close the Graphs"}
-          </Nav.Link>
-        </Nav.Item>
+        <Col sm={8}>
+          <Nav.Item>
+            <Nav.Link as={Link} to="/addjob">
+              Publish a new job
+            </Nav.Link>
+          </Nav.Item>
+        </Col>
+
+        <Col sm={8}>
+          <Nav.Item>
+            <Nav.Link
+              onClick={() => {
+                setOpenGraphs(false);
+                setOpenPosts((prev) => !prev);
+              }}
+            >
+              {!openPosts ? "manage applications" : "close list of application"}
+            </Nav.Link>
+          </Nav.Item>
+        </Col>
+        <Col sm={8}>
+          <Nav.Item>
+            <Nav.Link onClick={() => navigate("/explore")}>
+              Explore candidates
+            </Nav.Link>
+          </Nav.Item>
+        </Col>
+        <Col sm={8}>
+          <Nav.Item>
+            <Nav.Link
+              onClick={() => {
+                setOpenPosts(false);
+                setOpenGraphs((prev) => !prev);
+              }}
+            >
+              {!openGraphs ? "Data Analytics" : "Close the Graphs"}
+            </Nav.Link>
+          </Nav.Item>
+        </Col>
       </Nav>
 
       <MDBRow style={{ margin: "2%" }}>

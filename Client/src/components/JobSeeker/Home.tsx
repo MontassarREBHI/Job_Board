@@ -57,14 +57,14 @@ const Home = () => {
     }
   }, [keyWord]);
   useEffect(() => {
-    const { CV, ...userInfoWithoutCV } = userInfo;
-    console.log(userInfo);
+    const userInfoDuplicate = { ...userInfo };
+    const { CV, ...userInfoWithoutCV } = userInfoDuplicate;
     loggedIn === "true"
       ? !Object.values(userInfoWithoutCV).every((e) => e !== "")
         ? setShowAlert(true)
         : setShowAlert(false)
       : null;
-  }, [userInfo]);
+  }, [loggedIn, userInfo]);
 
   const signInToApply = () => {
     confirmAlert({
