@@ -58,6 +58,7 @@ const Home = () => {
   }, [keyWord]);
   useEffect(() => {
     const { CV, ...userInfoWithoutCV } = userInfo;
+    console.log(userInfo);
     loggedIn === "true"
       ? !Object.values(userInfoWithoutCV).every((e) => e !== "")
         ? setShowAlert(true)
