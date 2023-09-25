@@ -51,38 +51,67 @@ const EmployerDashboard = () => {
         style={{
           justifyContent: "center",
           alignItems: "center",
-          display: "flex",
         }}
       >
-        <Col sm={8}>
-          <Nav.Item>
+        <Col lg={1} sm={0}>
+          {" "}
+        </Col>
+        <Col
+          className="d-flex flex-column flex-md-row justify-content-between align-items-center"
+          style={{
+            fontFamily: "Times",
+
+            padding: "10px",
+          }}
+        >
+          <Nav.Item
+            style={{
+              width: "200px",
+              marginBottom: "1%",
+              border: "1px solid #ccc",
+            }}
+          >
             <Nav.Link as={Link} to="/addjob">
               Publish a new job
             </Nav.Link>
           </Nav.Item>
-        </Col>
 
-        <Col sm={8}>
-          <Nav.Item>
+          <Nav.Item
+            style={{
+              width: "200px",
+              marginBottom: "1%",
+              border: `1px solid ${!openPosts ? "#ccc" : "red"}`,
+            }}
+          >
             <Nav.Link
               onClick={() => {
                 setOpenGraphs(false);
                 setOpenPosts((prev) => !prev);
               }}
             >
-              {!openPosts ? "manage applications" : "close list of application"}
+              {!openPosts ? "Manage Applications" : "Close List of Application"}
             </Nav.Link>
           </Nav.Item>
-        </Col>
-        <Col sm={8}>
-          <Nav.Item>
+
+          <Nav.Item
+            style={{
+              width: "200px",
+              marginBottom: "1%",
+              border: `1px solid #ccc`,
+            }}
+          >
             <Nav.Link onClick={() => navigate("/explore")}>
               Explore candidates
             </Nav.Link>
           </Nav.Item>
-        </Col>
-        <Col sm={8}>
-          <Nav.Item>
+
+          <Nav.Item
+            style={{
+              width: "200px",
+              marginBottom: "1%",
+              border: `1px solid ${!openGraphs ? "#ccc" : "red"}`,
+            }}
+          >
             <Nav.Link
               onClick={() => {
                 setOpenPosts(false);
@@ -93,6 +122,7 @@ const EmployerDashboard = () => {
             </Nav.Link>
           </Nav.Item>
         </Col>
+        <Col lg={1} sm={0}></Col>
       </Nav>
 
       <MDBRow style={{ margin: "2%" }}>

@@ -27,9 +27,6 @@ export default function EmployerGraphs() {
   }, []);
 
   useEffect(() => {
-    // applicationsByPosition.length === positions.length && positions.length !== 0
-    //   null
-    //   :
     if (positions?.length) {
       positions.map((job) => {
         axios
@@ -72,6 +69,24 @@ export default function EmployerGraphs() {
         text: "Applications graph by position",
       },
     },
+    scales: {
+      x: {
+        type: "category",
+        display: true,
+        title: {
+          display: true,
+          text: "Position",
+        },
+      },
+      y: {
+        type: "linear",
+        display: true,
+        title: {
+          display: true,
+          text: "Value",
+        },
+      },
+    },
   };
 
   const data = {
@@ -79,7 +94,6 @@ export default function EmployerGraphs() {
     datasets: [
       {
         label: "Total rejected",
-
         data: positions.map((e) =>
           e.applications.length
             ? e.applications.filter(
@@ -91,7 +105,6 @@ export default function EmployerGraphs() {
       },
       {
         label: "Total accepted",
-
         data: positions.map((e) =>
           e.applications.length
             ? e.applications.filter(
@@ -104,14 +117,14 @@ export default function EmployerGraphs() {
       {
         label: "Total applications",
         data: positions.map((e) => e.applications.length),
-        backgroundColor: " rgba(53, 162, 235, 0.5)",
+        backgroundColor: "rgba(53, 162, 235, 0.5)",
       },
     ],
   };
 
   return (
     <div className="container">
-      <div style={{ width: "1200px", height: "500px" }}>
+      <div>
         <Bar options={options} data={data} />
       </div>
     </div>

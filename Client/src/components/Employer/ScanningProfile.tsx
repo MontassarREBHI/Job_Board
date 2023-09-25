@@ -70,11 +70,11 @@ const ScanningProfile = () => {
                 </div>
                 <div className="d-flex justify-content-between align-items-center mb-4">
                   <MDBCardText className="lead fw-normal mb-0">
-                    Recent photos
+                    Recent posts:
                   </MDBCardText>
                   <MDBCardText className="mb-0">
                     <a href="#!" className="text-muted">
-                      Show all
+                      To be developed
                     </a>
                   </MDBCardText>
                 </div>
